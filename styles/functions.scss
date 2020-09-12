@@ -1,0 +1,11 @@
+$rem-size: 16;
+
+@function rem($pixels, $size: $rem-size) {
+  @if(unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+  @if (unitless($size)) {
+    $size: $size * 1px;
+  }
+  @return $pixels / $size * 1rem;
+}

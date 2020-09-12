@@ -1,0 +1,26 @@
+@import 'styles/variables';
+@import 'styles/functions';
+
+.Wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  color: $dark-grey;
+}
+
+.Content {
+  display: flex;
+  flex: 1;
+  background-color: $white;
+  justify-content: center;
+}
+
+.Footer {
+  font-size: rem(12);
+  color: $white;
+  display: flex;
+  height: 2rem;
+  background-color: $dark-grey;
+  justify-content: center;
+  align-items: center;
+}
