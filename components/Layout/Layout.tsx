@@ -9,7 +9,7 @@ type Props = {
 
 export const Layout = ({ withFooter, children }: Props) => (
   <div className={styles.Wrapper}>
-    <header>HEADER</header>
+    <header className={styles.Header}>Kushebina.ph</header>
     <main className={styles.Content}>{children}</main>
     {withFooter && (
       <footer className={styles.Footer}>clicktronix@hotmail.com</footer>

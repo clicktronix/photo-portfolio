@@ -8,6 +8,15 @@
   color: $dark-grey;
 }
 
+.Header {
+  background-color: $dark-grey;
+  color: $white;
+  padding: rem(20);
+  text-align: center;
+  font-size: rem(35);
+  font-weight: 100;
+}
+
 .Content {
   display: flex;
   flex: 1;
