@@ -7,12 +7,12 @@ type Props = {
   children: ReactChild | ReactChild[];
 };
 
-export const Layout = ({ withFooter, children }: Props) => (
-  <div className={styles.Wrapper}>
-    <header className={styles.Header}>Kushebina.ph</header>
-    <main className={styles.Content}>{children}</main>
-    {withFooter && (
-      <footer className={styles.Footer}>clicktronix@hotmail.com</footer>
-    )}
-  </div>
-);
+export function Layout({ withFooter, children }: Props) {
+  return (
+    <div className={styles.Wrapper}>
+      <header className={styles.Header}>Kushebina.ph</header>
+      <main className={styles.Content}>{children}</main>
+      {withFooter && <footer className={styles.Footer}>clicktronix@hotmail.com</footer>}
+    </div>
+  );
+}
