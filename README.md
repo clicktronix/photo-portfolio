@@ -1,5 +1,7 @@
 # Photo-portfolio
 
+### Portfolio of photos from masonry layout
+
 ## Getting Started
 
 First, run the development server:
