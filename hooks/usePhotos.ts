@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { getPhotos } from 'api/api';
+import { getPhotos } from 'api/photos';
 import { Photo } from 'models/photo';
 import { useMountedState } from 'react-use';
 
