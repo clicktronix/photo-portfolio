@@ -1,4 +1,5 @@
 import { Grid } from 'components/Grid/Grid';
+import { CONFIG } from 'core/config';
 import { Photo, PhotoResponse } from 'models/photo';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
@@ -17,7 +18,7 @@ export default function Home({ photos }: InferGetStaticPropsType<typeof getStati
 }
 
 export const getStaticProps: GetStaticProps<GridProps> = async () => {
-  const data: PhotoResponse[] = await fetch('http://127.0.0.1:8000/api/v1/photos/')
+  const data: PhotoResponse[] = await fetch(CONFIG.baseUrl)
     .then((res) => res.json())
     .catch((err) => err.json());
   const photos = data
