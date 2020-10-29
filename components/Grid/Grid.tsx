@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
 import Gallery from 'react-photo-gallery';
 
-import { usePhotos } from 'hooks/usePhotos';
+import { Photo } from 'models/photo';
 
-export function Grid() {
-  const { photos, fetchData } = usePhotos();
+type GridProps = {
+  photos: Photo[];
+};
 
-  useEffect(() => fetchData);
+export function Grid({ photos }: GridProps) {
+  if (typeof window === 'undefined') {
+    return null;
+  }
 
   return <Gallery photos={photos} targetRowHeight={400} />;
 }
