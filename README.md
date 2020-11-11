@@ -1,4 +1,5 @@
 # Photo-portfolio
+Frontend with a gallery of photos. Portfolio for a photographer.
 
 ### Portfolio of photos from masonry layout
 
