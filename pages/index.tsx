@@ -20,10 +20,13 @@ export default function Home({ photos }: MainProps) {
 
   useEffect(() => {
     setTimeout(() => {
-      if (currentPhoto?.done) {
+      const iter = gen.current.next();
+      if (iter?.done) {
         gen.current = generator(photos);
+        setCurrentPhoto(gen.current.next());
+      } else {
+        setCurrentPhoto(iter);
       }
-      setCurrentPhoto(gen.current.next());
     }, 5000);
   });
 
