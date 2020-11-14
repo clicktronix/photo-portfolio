@@ -3,3 +3,13 @@
   height: 100vh;
   width: 100%;
 }
+
+.smoothImage {
+  transition: opacity .5s;
+}
+.imageVisible {
+  opacity: 1;
+}
+.imageHidden {
+  opacity: 0;
+}

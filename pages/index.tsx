@@ -1,8 +1,11 @@
-import { CONFIG } from 'core/config';
-import { Photo, PhotoResponse } from 'models/photo';
-import { GetStaticProps } from 'next';
 import { useEffect, useRef, useState } from 'react';
-import { Layout } from '../components/Layout/Layout';
+import { GetStaticProps } from 'next';
+import cn from 'classnames';
+
+import { CONFIG } from 'core/config';
+import { generatorFromArr } from 'helpers/generatorFromArr';
+import { Photo, PhotoResponse } from 'models/photo';
+import { Layout } from 'components/Layout/Layout';
 
 import styles from './Main.module.scss';
 
@@ -10,30 +13,44 @@ type MainProps = {
   photos: Photo[];
 };
 
-function* generator<T>(photos: T[]) {
-  yield* photos;
-}
-
 export default function Home({ photos }: MainProps) {
-  const gen = useRef<Generator<Photo>>(generator(photos));
+  const gen = useRef<Generator<Photo>>(generatorFromArr(photos));
   const [currentPhoto, setCurrentPhoto] = useState<IteratorResult<Photo | undefined>>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onLoad = () => {
+    setIsLoading(false);
+  };
+
+  const getNextPhoto = () => {
+    const iter = gen.current.next();
+    if (iter?.done) {
+      gen.current = generatorFromArr(photos);
+      setCurrentPhoto(gen.current.next());
+    } else {
+      setCurrentPhoto(iter);
+    }
+  };
 
   useEffect(() => {
+    setIsLoading(true);
     setTimeout(() => {
-      const iter = gen.current.next();
-      if (iter?.done) {
-        gen.current = generator(photos);
-        setCurrentPhoto(gen.current.next());
-      } else {
-        setCurrentPhoto(iter);
-      }
+      getNextPhoto();
     }, 5000);
-  });
+  }, [currentPhoto]);
 
   return (
     <Layout withFooter={false} withHeader={false}>
       {currentPhoto?.value && (
-        <img className={styles.Photo} src={currentPhoto.value.src} alt="banner" />
+        <img
+          className={cn(styles.Photo, styles.smoothImage, {
+            [styles.imageVisible]: !isLoading,
+            [styles.imageHidden]: isLoading,
+          })}
+          src={currentPhoto.value.src}
+          onLoad={onLoad}
+          alt="banner"
+        />
       )}
     </Layout>
   );
