@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { PureComponent } from 'react';
 import { GetStaticProps } from 'next';
 import cn from 'classnames';
 
@@ -13,47 +13,59 @@ type MainProps = {
   photos: Photo[];
 };
 
-export default function Home({ photos }: MainProps) {
-  const gen = useRef<Generator<Photo>>(generatorFromArr(photos));
-  const [currentPhoto, setCurrentPhoto] = useState<IteratorResult<Photo | undefined>>();
-  const [isLoading, setIsLoading] = useState(false);
+type State = {
+  isLoading: boolean;
+  currentPhoto: IteratorResult<Photo | undefined>;
+};
 
-  const onLoad = () => {
-    setIsLoading(false);
+export default class Main extends PureComponent<MainProps, State> {
+  public state: State = {
+    isLoading: false,
+    currentPhoto: undefined,
   };
 
-  const getNextPhoto = () => {
-    const iter = gen.current.next();
-    if (iter?.done) {
-      gen.current = generatorFromArr(photos);
-      setCurrentPhoto(gen.current.next());
-    } else {
-      setCurrentPhoto(iter);
+  private gen = generatorFromArr(this.props.photos);
+
+  public componentDidMount() {
+    this.nextPhoto();
+  }
+
+  public componentDidUpdate(_: MainProps, prevState: State) {
+    if (prevState.currentPhoto !== this.state.currentPhoto) {
+      setTimeout(() => {
+        this.nextPhoto();
+      }, 5000);
     }
-  };
+  }
 
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      getNextPhoto();
-    }, 5000);
-  }, [currentPhoto]);
+  private nextPhoto() {
+    const iter = this.gen.next();
+    if (iter?.done) {
+      this.gen = generatorFromArr(this.props.photos);
+      this.setState({ currentPhoto: this.gen.next() });
+    } else {
+      this.setState({ currentPhoto: iter });
+    }
+  }
 
-  return (
-    <Layout withFooter={false} withHeader={false}>
-      {currentPhoto?.value && (
-        <img
-          className={cn(styles.Photo, styles.smoothImage, {
-            [styles.imageVisible]: !isLoading,
-            [styles.imageHidden]: isLoading,
-          })}
-          src={currentPhoto.value.src}
-          onLoad={onLoad}
-          alt="banner"
-        />
-      )}
-    </Layout>
-  );
+  public render() {
+    const { currentPhoto, isLoading } = this.state;
+
+    return (
+      <Layout withFooter={false} withHeader={false}>
+        {currentPhoto?.value && (
+          <img
+            className={cn(styles.Photo, styles.smoothImage, {
+              [styles.imageVisible]: !isLoading,
+              [styles.imageHidden]: isLoading,
+            })}
+            src={currentPhoto.value.src}
+            alt="banner"
+          />
+        )}
+      </Layout>
+    );
+  }
 }
 
 export const getStaticProps: GetStaticProps<MainProps> = async () => {
