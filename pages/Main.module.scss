@@ -1,17 +1,19 @@
+.Container {
+  background-color: black;
+}
+
 .Photo {
   object-fit: cover;
   height: 100vh;
   width: 100%;
-}
-
-.SmoothImage {
-  transition: opacity .5s;
+  padding: 20px;
 }
 
 .ImageVisible {
   opacity: 1;
+  transition: all 1s;
 }
 
 .ImageHidden {
-  opacity: 0;
+  opacity: .1;
 }

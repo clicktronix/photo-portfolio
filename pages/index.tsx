@@ -24,19 +24,14 @@ export default class Main extends PureComponent<MainProps, State> {
     currentPhoto: undefined,
   };
 
-  constructor(props) {
-    super(props);
-    this.nextPhoto = this.nextPhoto.bind(this);
-    this.onLoad = this.onLoad.bind(this);
-  }
-
   private gen = generatorFromArr(this.props.photos);
 
   public componentDidMount() {
     this.nextPhoto();
   }
 
-  private nextPhoto() {
+  private nextPhoto = () => {
+    this.setState({ isLoading: true });
     const iter = this.gen.next();
     if (iter?.done) {
       this.gen = generatorFromArr(this.props.photos);
@@ -44,30 +39,35 @@ export default class Main extends PureComponent<MainProps, State> {
     } else {
       this.setState({ currentPhoto: iter });
     }
-  }
+  };
 
-  private onLoad() {
-    setTimeout(() => {
-      this.nextPhoto();
-    }, 5000);
-  }
+  private onLoadEnd = () => {
+    this.setState({ isLoading: false });
+  };
+
+  private onLoad = () => {
+    setTimeout(this.nextPhoto, 5000);
+    setTimeout(this.onLoadEnd, 100);
+  };
 
   public render() {
     const { currentPhoto, isLoading } = this.state;
 
     return (
       <Layout withFooter={false} withHeader={false}>
-        {currentPhoto?.value && (
-          <img
-            className={cn(styles.Photo, styles.SmoothImage, {
-              [styles.ImageVisible]: !isLoading,
-              [styles.ImageHidden]: isLoading,
-            })}
-            src={currentPhoto.value.src}
-            onLoad={this.onLoad}
-            alt="banner"
-          />
-        )}
+        <div className={styles.Container}>
+          {currentPhoto?.value && (
+            <img
+              className={cn(styles.Photo, {
+                [styles.ImageVisible]: !isLoading,
+                [styles.ImageHidden]: isLoading,
+              })}
+              src={currentPhoto.value.src}
+              onLoad={this.onLoad}
+              alt="banner"
+            />
+          )}
+        </div>
       </Layout>
     );
   }
