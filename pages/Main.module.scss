@@ -4,12 +4,14 @@
   width: 100%;
 }
 
-.smoothImage {
+.SmoothImage {
   transition: opacity .5s;
 }
-.imageVisible {
+
+.ImageVisible {
   opacity: 1;
 }
-.imageHidden {
+
+.ImageHidden {
   opacity: 0;
 }
