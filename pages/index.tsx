@@ -15,12 +15,14 @@ type MainProps = {
 
 type State = {
   isLoading: boolean;
+  timeoutIds: NodeJS.Timeout[];
   currentPhoto: IteratorResult<Photo | undefined>;
 };
 
 export default class Main extends PureComponent<MainProps, State> {
   public state: State = {
     isLoading: false,
+    timeoutIds: [],
     currentPhoto: undefined,
   };
 
@@ -41,13 +43,23 @@ export default class Main extends PureComponent<MainProps, State> {
     }
   };
 
-  private onLoadEnd = () => {
+  private onPhotoLoadEnd = () => {
     this.setState({ isLoading: false });
   };
 
   private onLoad = () => {
-    setTimeout(this.nextPhoto, 5000);
-    setTimeout(this.onLoadEnd, 100);
+    const nextPhotoTimeoutId = setTimeout(this.nextPhoto, 5000);
+    const onPhotoLoadEndTimeoutId = setTimeout(this.onPhotoLoadEnd, 100);
+    this.setState({ timeoutIds: [nextPhotoTimeoutId, onPhotoLoadEndTimeoutId] });
+  };
+
+  private onPhotoClick = () => {
+    this.clearTimeouts();
+    this.nextPhoto();
+  };
+
+  private clearTimeouts = () => {
+    this.state.timeoutIds.forEach((x) => clearTimeout(x));
   };
 
   public render() {
@@ -63,6 +75,7 @@ export default class Main extends PureComponent<MainProps, State> {
                 [styles.ImageHidden]: isLoading,
               })}
               src={currentPhoto.value.src}
+              onClick={this.onPhotoClick}
               onLoad={this.onLoad}
               alt="banner"
             />
