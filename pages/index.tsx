@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { PureComponent } from 'react';
 import { GetStaticProps } from 'next';
 import cn from 'classnames';
 
@@ -13,47 +13,77 @@ type MainProps = {
   photos: Photo[];
 };
 
-export default function Home({ photos }: MainProps) {
-  const gen = useRef<Generator<Photo>>(generatorFromArr(photos));
-  const [currentPhoto, setCurrentPhoto] = useState<IteratorResult<Photo | undefined>>();
-  const [isLoading, setIsLoading] = useState(false);
+type State = {
+  isLoading: boolean;
+  timeoutIds: NodeJS.Timeout[];
+  currentPhoto: IteratorResult<Photo | undefined>;
+};
 
-  const onLoad = () => {
-    setIsLoading(false);
+export default class Main extends PureComponent<MainProps, State> {
+  public state: State = {
+    isLoading: false,
+    timeoutIds: [],
+    currentPhoto: undefined,
   };
 
-  const getNextPhoto = () => {
-    const iter = gen.current.next();
+  private gen = generatorFromArr(this.props.photos);
+
+  public componentDidMount() {
+    this.nextPhoto();
+  }
+
+  private nextPhoto = () => {
+    this.setState({ isLoading: true });
+    const iter = this.gen.next();
     if (iter?.done) {
-      gen.current = generatorFromArr(photos);
-      setCurrentPhoto(gen.current.next());
+      this.gen = generatorFromArr(this.props.photos);
+      this.setState({ currentPhoto: this.gen.next() });
     } else {
-      setCurrentPhoto(iter);
+      this.setState({ currentPhoto: iter });
     }
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      getNextPhoto();
-    }, 5000);
-  }, [currentPhoto]);
+  private onPhotoLoadEnd = () => {
+    this.setState({ isLoading: false });
+  };
 
-  return (
-    <Layout withFooter={false} withHeader={false}>
-      {currentPhoto?.value && (
-        <img
-          className={cn(styles.Photo, styles.smoothImage, {
-            [styles.imageVisible]: !isLoading,
-            [styles.imageHidden]: isLoading,
-          })}
-          src={currentPhoto.value.src}
-          onLoad={onLoad}
-          alt="banner"
-        />
-      )}
-    </Layout>
-  );
+  private onLoad = () => {
+    const nextPhotoTimeoutId = setTimeout(this.nextPhoto, 5000);
+    const onPhotoLoadEndTimeoutId = setTimeout(this.onPhotoLoadEnd, 100);
+    this.setState({ timeoutIds: [nextPhotoTimeoutId, onPhotoLoadEndTimeoutId] });
+  };
+
+  private onPhotoClick = () => {
+    this.clearTimeouts();
+    this.nextPhoto();
+  };
+
+  private clearTimeouts = () => {
+    this.state.timeoutIds.forEach((x) => clearTimeout(x));
+  };
+
+  public render() {
+    const { currentPhoto, isLoading } = this.state;
+
+    return (
+      <Layout withFooter={false} withHeader={false}>
+        <div className={styles.Container}>
+          {currentPhoto?.value && (
+            <img
+              className={cn(styles.Photo, {
+                [styles.ImageVisible]: !isLoading,
+                [styles.ImageHidden]: isLoading,
+              })}
+              src={currentPhoto.value.src}
+              onClick={this.onPhotoClick}
+              onLoad={this.onLoad}
+              alt="banner"
+            />
+          )}
+        </div>
+      </Layout>
+    );
+  }
 }
 
 export const getStaticProps: GetStaticProps<MainProps> = async () => {
