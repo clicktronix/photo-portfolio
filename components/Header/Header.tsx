@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import cn from 'classnames';
+
 import { HamburgerMenu } from '../HamburgerButton/HamburgerButton';
 import styles from './Header.module.scss';
 
@@ -10,13 +12,26 @@ export function Header() {
   };
 
   return (
-    <header className={styles.Header}>
+    <header
+      className={cn(styles.Header, {
+        [styles.IsBlur]: isMenuClicked,
+      })}
+    >
       <HamburgerMenu isClicked={isMenuClicked} onClick={onHamburgerClick} />
-
-      <nav className={styles.Menu}>
-        <a href="1">фото</a>
-        <a href="2">альбомы</a>
-        <a href="3">контакты</a>
+      <nav
+        className={cn(styles.Menu, {
+          [styles.ShowMenu]: !isMenuClicked,
+        })}
+      >
+        <a href="1" className={styles.Link}>
+          фото
+        </a>
+        <a href="2" className={styles.Link}>
+          альбомы
+        </a>
+        <a href="3" className={styles.Link}>
+          контакты
+        </a>
       </nav>
     </header>
   );
