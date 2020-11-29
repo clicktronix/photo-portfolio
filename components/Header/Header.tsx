@@ -14,25 +14,29 @@ export function Header() {
   return (
     <header
       className={cn(styles.Header, {
-        [styles.IsBlur]: isMenuClicked,
+        [styles.IsHeaderShow]: isMenuClicked,
       })}
     >
       <HamburgerMenu isClicked={isMenuClicked} onClick={onHamburgerClick} />
-      <nav
+      <div
         className={cn(styles.Menu, {
-          [styles.ShowMenu]: !isMenuClicked,
+          [styles.ShowMenu]: isMenuClicked,
+          [styles.HideMenu]: !isMenuClicked,
         })}
       >
-        <a href="1" className={styles.Link}>
-          фото
-        </a>
-        <a href="2" className={styles.Link}>
-          альбомы
-        </a>
-        <a href="3" className={styles.Link}>
-          контакты
-        </a>
-      </nav>
+        <h1 className={styles.Title}>Kushebina.ph</h1>
+        <nav>
+          <a href="1" className={styles.Link}>
+            фото
+          </a>
+          <a href="2" className={styles.Link}>
+            альбомы
+          </a>
+          <a href="3" className={styles.Link}>
+            контакты
+          </a>
+        </nav>
+      </div>
     </header>
   );
 }
