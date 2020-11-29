@@ -29,13 +29,15 @@ $translateX: 0;
     left: 0;
     border-radius: ($height-line / 2);
     transition: all $transition-time;
-    
+
     &.FirstLine {
       top: 0;
     }
+
     &.SecondLine {
       top: 50%;
     }
+
     &.ThirdLine {
       top: 100%;
     }
@@ -43,10 +45,11 @@ $translateX: 0;
 
   &:hover, &:focus {
      .FirstLine {
-        transform: translateY($height-line / 2 * -1);
+      transform: translateY($height-line / 2 * -1);
      }
+
     .ThirdLine {
-        transform: translateY($height-line / 2);
+      transform: translateY($height-line / 2);
     }  
   }
 
@@ -54,9 +57,11 @@ $translateX: 0;
     .FirstLine {
       transform: translateY($translateY) translateX($translateX) rotate($rotation);
     }
+
     .SecondLine {
       opacity: 0;
     }
+
     .ThirdLine {
       transform: translateY($translateY * -1) translateX($translateX) rotate($rotation * -1);
     }
