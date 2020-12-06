@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import cn from 'classnames';
+import Link from 'next/link';
 
 import { HamburgerMenu } from '../HamburgerButton/HamburgerButton';
 import styles from './Header.module.scss';
@@ -26,15 +27,15 @@ export function Header() {
       >
         <h1 className={styles.Title}>Kushebina.ph</h1>
         <nav>
-          <a href="1" className={styles.Link}>
-            фото
-          </a>
-          <a href="2" className={styles.Link}>
-            альбомы
-          </a>
-          <a href="3" className={styles.Link}>
-            контакты
-          </a>
+          <Link href="/grid">
+            <a className={styles.Link}>фото</a>
+          </Link>
+          <Link href="/albums">
+            <a className={styles.Link}>альбомы</a>
+          </Link>
+          <Link href="/contacts">
+            <a className={styles.Link}>контакты</a>
+          </Link>
         </nav>
       </div>
     </header>
