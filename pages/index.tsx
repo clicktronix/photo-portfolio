@@ -66,7 +66,7 @@ export default class Main extends PureComponent<MainProps, State> {
     const { currentPhoto, isLoading } = this.state;
 
     return (
-      <Layout withFooter={false} withHeader={false}>
+      <Layout withFooter={false}>
         <div className={styles.Container}>
           {currentPhoto?.value && (
             <img
