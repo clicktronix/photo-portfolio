@@ -1,23 +1,43 @@
 .LightBox {
   display: flex;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  z-index: 100;
 }
 
 .IsHide {
   display: none;
 }
 
-.Photo {
+.Wrapper {
+  position: relative;
+}
 
+.Photo {
+  position: relative;
+  height: 100vh;
+  max-width: 100vw;
+  object-fit: cover;
 }
 
 .PrevButton {
-
+  position: absolute;
+  left: -30px;
+  top: 50%;
 }
 
 .NextButton {
-
+  position: absolute;
+  right: -30px;
+  top: 50%;
 }
 
 .HideButton {
-  
+  position: absolute;
+  right: -23px;
+  top: 0;
 }

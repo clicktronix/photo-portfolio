@@ -25,6 +25,10 @@ export function Grid({ photos }: GridProps) {
     }
   };
 
+  const onLightBoxClose = () => {
+    setSelectedPhoto(null);
+  };
+
   const renderPhoto = useCallback(
     ({ ...props }: PhotoComponentProps) => <PhotoComponent onLoad={onPhotoLoaded} {...props} />,
     [],
@@ -40,14 +44,14 @@ export function Grid({ photos }: GridProps) {
 
   return (
     <>
-      <Gallery
-        photos={photos}
-        targetRowHeight={400}
-        onClick={onPhotoClick}
-        renderImage={renderPhoto}
-      />
+      <Gallery margin={2} photos={photos} onClick={onPhotoClick} renderImage={renderPhoto} />
       {selectedPhoto && (
-        <LightBox isShow={Boolean(selectedPhoto)} currentPhoto={selectedPhoto} photos={photos} />
+        <LightBox
+          isShow={Boolean(selectedPhoto)}
+          currentPhoto={selectedPhoto}
+          photos={photos}
+          onClose={onLightBoxClose}
+        />
       )}
     </>
   );

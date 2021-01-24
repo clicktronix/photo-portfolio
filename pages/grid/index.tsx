@@ -10,7 +10,6 @@ type GridProps = {
 };
 
 export default function PhotoGrid({ photos }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(photos);
   return (
     <Layout withFooter>
       <Grid photos={photos} />

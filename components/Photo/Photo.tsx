@@ -5,10 +5,18 @@ export type PhotoComponentProps = {
   onLoad: () => void;
 } & RenderImageProps<Photo>;
 
-export const PhotoComponent = ({ photo, index, onClick, onLoad }: PhotoComponentProps) => {
+export const PhotoComponent = ({ photo, index, margin, onClick, onLoad }: PhotoComponentProps) => {
   const onImageClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     onClick(e, { ...photo, index });
   };
 
-  return <img alt="grid" {...photo} onClick={onImageClick} onLoad={onLoad} />;
+  return (
+    <img
+      alt="grid"
+      style={{ margin, height: photo.height, width: photo.width }}
+      {...(photo as any)}
+      onClick={onImageClick}
+      onLoad={onLoad}
+    />
+  );
 };
