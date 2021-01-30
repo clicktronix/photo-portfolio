@@ -1,8 +1,9 @@
 .LightBox {
   display: flex;
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
+  overflow-y: hidden;
   justify-content: center;
   align-items: center;
   background-color: black;
@@ -24,20 +25,27 @@
   object-fit: cover;
 }
 
+.IsPhotoLoading {
+  display: none;
+}
+
 .PrevButton {
   position: absolute;
   left: -30px;
   top: 50%;
+  cursor: pointer;
 }
 
 .NextButton {
   position: absolute;
   right: -30px;
   top: 50%;
+  cursor: pointer;
 }
 
 .HideButton {
   position: absolute;
   right: -23px;
   top: 0;
+  cursor: pointer;
 }

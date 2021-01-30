@@ -16,10 +16,15 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
     photos.find((x) => x.src === currentPhoto.src),
   );
   const [lightBoxDisplay, setLightBoxDisplay] = useState(isShow);
+  const [isLoading, setIsLoading] = useState(true);
 
   const hideLightBox = () => {
     setLightBoxDisplay(false);
     onClose();
+  };
+
+  const onPhotoLoad = () => {
+    setIsLoading(false);
   };
 
   const showNext = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -51,16 +56,29 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
       })}
     >
       <div className={styles.Wrapper}>
-        <button className={styles.HideButton} onClick={hideLightBox}>
-          x
-        </button>
-        <button className={styles.PrevButton} onClick={showPrev}>
-          ⭠
-        </button>
-        <img className={styles.Photo} alt={photoToShow.src} src={photoToShow.src}></img>
-        <button className={styles.NextButton} onClick={showNext}>
-          ⭢
-        </button>
+        {!isLoading && (
+          <>
+            <button className={styles.HideButton} onClick={hideLightBox}>
+              x
+            </button>
+            <button className={styles.PrevButton} onClick={showPrev}>
+              ⭠
+            </button>
+          </>
+        )}
+        <img
+          className={cn(styles.Photo, {
+            [styles.IsPhotoLoading]: isLoading,
+          })}
+          alt={photoToShow.src}
+          src={photoToShow.src}
+          onLoad={onPhotoLoad}
+        />
+        {!isLoading && (
+          <button className={styles.NextButton} onClick={showNext}>
+            ⭢
+          </button>
+        )}
       </div>
     </div>
   );

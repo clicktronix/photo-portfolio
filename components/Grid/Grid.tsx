@@ -1,9 +1,12 @@
 import Gallery, { PhotoClickHandler } from 'react-photo-gallery';
+import cn from 'classnames';
 
 import { Photo } from 'models/photo';
 import { useCallback, useRef, useState } from 'react';
 import { PhotoComponent, PhotoComponentProps } from 'components/Photo/Photo';
 import { LightBox } from 'components/LightBox/LightBox';
+
+import styles from './Grid.module.scss';
 
 type GridProps = {
   photos: Photo[];
@@ -11,7 +14,7 @@ type GridProps = {
 
 export function Grid({ photos }: GridProps) {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const counter = useRef(0);
 
   const onPhotoClick: PhotoClickHandler<Photo> = (event, { photo }) => {
@@ -22,6 +25,7 @@ export function Grid({ photos }: GridProps) {
     counter.current += 1;
     if (counter.current >= photos.length) {
       setIsLoading(false);
+      counter.current = 0;
     }
   };
 
@@ -38,13 +42,15 @@ export function Grid({ photos }: GridProps) {
     return null;
   }
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
-      <Gallery margin={2} photos={photos} onClick={onPhotoClick} renderImage={renderPhoto} />
+      <div
+        className={cn(styles.Photo, {
+          [styles.IsPhotosLoading]: isLoading,
+        })}
+      >
+        <Gallery margin={2} photos={photos} onClick={onPhotoClick} renderImage={renderPhoto} />
+      </div>
       {selectedPhoto && (
         <LightBox
           isShow={Boolean(selectedPhoto)}
