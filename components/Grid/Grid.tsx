@@ -38,14 +38,10 @@ export function Grid({ photos }: GridProps) {
     [],
   );
 
-  if (typeof window === 'undefined') {
-    return null;
-  }
-
   return (
     <>
       <div
-        className={cn(styles.Photo, {
+        className={cn({
           [styles.IsPhotosLoading]: isLoading,
         })}
       >
