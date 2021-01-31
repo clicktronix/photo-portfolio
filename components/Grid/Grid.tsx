@@ -38,6 +38,10 @@ export function Grid({ photos }: GridProps) {
     [],
   );
 
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   return (
     <>
       <div

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import cn from 'classnames';
 
 import styles from './LightBox.module.scss';
+import { CloseButton } from 'components/CloseButton/CloseButton';
 
 type LightBoxProps = {
   currentPhoto: Photo;
@@ -58,12 +59,8 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
       <div className={styles.Wrapper}>
         {!isLoading && (
           <>
-            <button className={styles.HideButton} onClick={hideLightBox}>
-              x
-            </button>
-            <button className={styles.PrevButton} onClick={showPrev}>
-              ⭠
-            </button>
+            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
+            <span role="button" tabIndex={0} className={styles.PrevButton} onClick={showPrev} />
           </>
         )}
         <img
@@ -75,9 +72,7 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
           onLoad={onPhotoLoad}
         />
         {!isLoading && (
-          <button className={styles.NextButton} onClick={showNext}>
-            ⭢
-          </button>
+          <span role="button" tabIndex={-1} className={styles.NextButton} onClick={showNext} />
         )}
       </div>
     </div>
