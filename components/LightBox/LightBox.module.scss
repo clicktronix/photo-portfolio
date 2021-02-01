@@ -30,44 +30,61 @@
 }
 
 .PrevButton {
-  content: url(./img/next.svg);
+  content: '';
   position: absolute;
   width: 40px;
   height: 40px;
   left: 5px;
   top: 50%;
-  cursor: pointer;
+  background-color: black;
+  border-radius: 10px;
   z-index: 10;
-  transform: rotate(180deg);
 
-  &::before {
-    content: '';
-    width: 50px;
-    height: 50px;
-    background-color: black;
-    opacity: .3;
-    border-radius: 50%;
+  &::after {
+    content: url(./img/next.svg);
+    position: absolute;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    right: 6px;
+    top: 6px;
+    transform: rotate(180deg);
+    transition: all 0.5s ease-out;
+    z-index: 10;
+  }
+
+  &:hover::after {
+    transform: rotate(540deg);
+    transition: all 0.5s ease-out;
   }
 }
 
 .NextButton {
-  content: url(./img/next.svg);
+  content: '';
   position: absolute;
-  right: 5px;
-  top: 50%;
-  cursor: pointer;
   width: 40px;
   height: 40px;
+  right: 5px;
+  top: 50%;
+  background-color: black;
+  border-radius: 10px;
   z-index: 10;
 
-  &::before {
-    content: '';
+  &::after {
+    content: url(./img/next.svg);
     position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: black;
-    opacity: .3;
-    border-radius: 50%;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    right: 6px;
+    top: 6px;
+    transition: all 0.5s ease-out;
+    z-index: 10;
+  }
+
+  &:hover::after {
+    transform: rotate(360deg);
+    transition: all 0.5s ease-out;
   }
 }
 
