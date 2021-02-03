@@ -9,7 +9,7 @@ type GridProps = {
   photos: Photo[];
 };
 
-export default function PhotoGrid({ photos }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({ photos }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout withFooter>
       <Grid photos={photos} />
