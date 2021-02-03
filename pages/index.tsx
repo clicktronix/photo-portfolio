@@ -32,10 +32,6 @@ export default class Main extends PureComponent<MainProps, State> {
     this.nextPhoto();
   }
 
-  public componentWillUnmount() {
-    this.clearTimeouts();
-  }
-
   private nextPhoto = () => {
     this.setState({ isLoading: true });
     const iter = this.gen.next();
@@ -71,18 +67,20 @@ export default class Main extends PureComponent<MainProps, State> {
 
     return (
       <Layout withFooter={false}>
-        {currentPhoto?.value && (
-          <img
-            className={cn(styles.Photo, {
-              [styles.ImageVisible]: !isLoading,
-              [styles.ImageHidden]: isLoading,
-            })}
-            src={currentPhoto.value.src}
-            onClick={this.onPhotoClick}
-            onLoad={this.onLoad}
-            alt="banner"
-          />
-        )}
+        <div className={styles.Container}>
+          {currentPhoto?.value && (
+            <img
+              className={cn(styles.Photo, {
+                [styles.ImageVisible]: !isLoading,
+                [styles.ImageHidden]: isLoading,
+              })}
+              src={currentPhoto.value.src}
+              onClick={this.onPhotoClick}
+              onLoad={this.onLoad}
+              alt="banner"
+            />
+          )}
+        </div>
       </Layout>
     );
   }
