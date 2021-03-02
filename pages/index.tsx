@@ -34,6 +34,10 @@ export default class Main extends PureComponent<MainProps, State> {
     this.nextPhoto();
   }
 
+  public componentWillUnmount() {
+    this.clearTimeouts();
+  }
+
   private nextPhoto = () => {
     this.setState({ isLoading: true });
     const iter = this.gen.next();
