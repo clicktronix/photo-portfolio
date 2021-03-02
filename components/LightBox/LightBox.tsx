@@ -18,7 +18,7 @@ const ARROW_LEFT_KEY = 'ArrowLeft';
 
 export function LightBox({ isShow = false, currentPhoto, photos, onClose }: LightBoxProps) {
   const [photoToShow, setPhotoToShow] = useState<Photo | undefined>(photos.find((x) => x.src === currentPhoto.src));
-  const [lightBoxDisplay, setLightBoxDisplay] = useState(isShow);
+  const [isLightBoxShow, setIsLightBoxShow] = useState(isShow);
   const [isLoading, setIsLoading] = useState(true);
   const [isShowControls, setIsShowControls] = useState(false);
   const mouseMoveTimeOut = useRef<NodeJS.Timeout>();
@@ -37,7 +37,7 @@ export function LightBox({ isShow = false, currentPhoto, photos, onClose }: Ligh
     hideControls();
     switch (event.key) {
       case ESCAPE_KEY:
-        onHideLightBox();
+        hideLightBox();
         break;
       case ARROW_RIGHT_KEY:
         onShowNext();
@@ -64,8 +64,8 @@ export function LightBox({ isShow = false, currentPhoto, photos, onClose }: Ligh
     setIsShowControls(true);
   };
 
-  const onHideLightBox = () => {
-    setLightBoxDisplay(false);
+  const hideLightBox = () => {
+    setIsLightBoxShow(false);
     onClose();
   };
 
@@ -93,18 +93,16 @@ export function LightBox({ isShow = false, currentPhoto, photos, onClose }: Ligh
     }
   };
 
-  console.log(isShow, lightBoxDisplay);
-
   return (
     <div
       className={cn(styles.LightBox, {
-        [styles.IsHide]: !lightBoxDisplay,
+        [styles.IsHide]: !isLightBoxShow,
       })}
     >
       <div className={styles.Wrapper}>
         {isShowControls && (
           <>
-            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={onHideLightBox} />
+            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
             <span role="button" tabIndex={0} className={styles.PrevButton} onClick={onShowPrev} />
           </>
         )}
