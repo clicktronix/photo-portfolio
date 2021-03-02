@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import React from 'react';
 
 import styles from './Hamburger.module.scss';
 
@@ -7,7 +8,7 @@ type HamburgerMenuProps = {
   onClick: () => void;
 };
 
-export function HamburgerMenu({ isClicked, onClick }: HamburgerMenuProps) {
+export const HamburgerMenu = React.memo(({ isClicked, onClick }: HamburgerMenuProps) => {
   return (
     <div
       className={cn(styles.HamburgerIcon, {
@@ -22,4 +23,6 @@ export function HamburgerMenu({ isClicked, onClick }: HamburgerMenuProps) {
       <span className={cn(styles.Line, styles.ThirdLine)}></span>
     </div>
   );
-}
+});
+
+HamburgerMenu.displayName = 'HamburgerMenu';
