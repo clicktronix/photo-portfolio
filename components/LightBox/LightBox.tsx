@@ -31,6 +31,7 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(mouseMoveTimeOut.current);
     };
   });
 
