@@ -16,7 +16,7 @@ const ESCAPE_KEY = 'Escape';
 const ARROW_RIGHT_KEY = 'ArrowRight';
 const ARROW_LEFT_KEY = 'ArrowLeft';
 
-export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProps) {
+export function LightBox({ isShow = false, currentPhoto, photos, onClose }: LightBoxProps) {
   const [photoToShow, setPhotoToShow] = useState<Photo | undefined>(photos.find((x) => x.src === currentPhoto.src));
   const [lightBoxDisplay, setLightBoxDisplay] = useState(isShow);
   const [isLoading, setIsLoading] = useState(true);
@@ -37,13 +37,13 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
     hideControls();
     switch (event.key) {
       case ESCAPE_KEY:
-        hideLightBox();
+        onHideLightBox();
         break;
       case ARROW_RIGHT_KEY:
-        showNext();
+        onShowNext();
         break;
       case ARROW_LEFT_KEY:
-        showPrev();
+        onShowPrev();
         break;
       default:
         break;
@@ -64,7 +64,7 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
     setIsShowControls(true);
   };
 
-  const hideLightBox = () => {
+  const onHideLightBox = () => {
     setLightBoxDisplay(false);
     onClose();
   };
@@ -73,7 +73,7 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
     setIsLoading(false);
   };
 
-  const showNext = () => {
+  const onShowNext = () => {
     const currentIndex = photos.indexOf(photoToShow);
     if (currentIndex >= photos.length - 1) {
       setPhotoToShow(photos[0]);
@@ -83,7 +83,7 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
     }
   };
 
-  const showPrev = () => {
+  const onShowPrev = () => {
     const currentIndex = photos.indexOf(photoToShow);
     if (currentIndex <= 0) {
       setPhotoToShow(photos[0]);
@@ -92,6 +92,8 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
       setPhotoToShow(nextImage);
     }
   };
+
+  console.log(isShow, lightBoxDisplay);
 
   return (
     <div
@@ -102,8 +104,8 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
       <div className={styles.Wrapper}>
         {isShowControls && (
           <>
-            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
-            <span role="button" tabIndex={0} className={styles.PrevButton} onClick={showPrev} />
+            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={onHideLightBox} />
+            <span role="button" tabIndex={0} className={styles.PrevButton} onClick={onShowPrev} />
           </>
         )}
         <img
@@ -114,7 +116,7 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
           src={photoToShow.src}
           onLoad={onPhotoLoad}
         />
-        {isShowControls && <span role="button" tabIndex={-1} className={styles.NextButton} onClick={showNext} />}
+        {isShowControls && <span role="button" tabIndex={-1} className={styles.NextButton} onClick={onShowNext} />}
       </div>
     </div>
   );

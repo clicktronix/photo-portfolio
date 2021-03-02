@@ -19,6 +19,7 @@ export const Grid = React.memo(({ photos }: GridProps) => {
   const counter = useRef(0);
 
   const onPhotoClick: PhotoClickHandler<Photo> = (event, { photo }) => {
+    console.log(photo);
     setSelectedPhoto(photo);
   };
 
