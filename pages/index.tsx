@@ -8,9 +8,11 @@ import { Photo, PhotoResponse } from 'models/photo';
 import { Layout } from 'components/Layout/Layout';
 
 import styles from './Main.module.scss';
+import { Grid } from 'components/Grid/Grid';
 
 type MainProps = {
-  photos: Photo[];
+  mainScreenPhotos: Photo[];
+  gridPhotos: Photo[];
 };
 
 type State = {
@@ -26,7 +28,7 @@ export default class Main extends PureComponent<MainProps, State> {
     currentPhoto: undefined,
   };
 
-  private gen = generatorFromArr(this.props.photos);
+  private gen = generatorFromArr(this.props.mainScreenPhotos);
 
   public componentDidMount() {
     this.nextPhoto();
@@ -36,7 +38,7 @@ export default class Main extends PureComponent<MainProps, State> {
     this.setState({ isLoading: true });
     const iter = this.gen.next();
     if (iter?.done) {
-      this.gen = generatorFromArr(this.props.photos);
+      this.gen = generatorFromArr(this.props.mainScreenPhotos);
       this.setState({ currentPhoto: this.gen.next() });
     } else {
       this.setState({ currentPhoto: iter });
@@ -81,16 +83,26 @@ export default class Main extends PureComponent<MainProps, State> {
             />
           )}
         </div>
+        <Grid photos={this.props.gridPhotos} />
       </Layout>
     );
   }
 }
 
 export const getStaticProps: GetStaticProps<MainProps> = async () => {
-  const data: PhotoResponse[] = await fetch(`${CONFIG.baseUrl}/api/v1/photos/main-screen`)
+  const mainScreenResponse: PhotoResponse[] = await fetch(`${CONFIG.baseUrl}/api/v1/photos/main-screen`)
     .then((res) => res.json())
     .catch((err) => err.json());
-  const photos = data
+  const mainScreenPhotos = mainScreenResponse.map((x) => ({
+    width: x.width,
+    height: x.height,
+    src: x.img,
+  }));
+
+  const gridResponse: PhotoResponse[] = await fetch(`${CONFIG.baseUrl}/api/v1/photos/grid`)
+    .then((res) => res.json())
+    .catch((err) => err.json());
+  const gridPhotos = gridResponse
     .filter((x) => Boolean(x.is_grid))
     .map((x) => ({
       width: x.width,
@@ -100,7 +112,8 @@ export const getStaticProps: GetStaticProps<MainProps> = async () => {
 
   return {
     props: {
-      photos,
+      mainScreenPhotos,
+      gridPhotos,
     },
   };
 };

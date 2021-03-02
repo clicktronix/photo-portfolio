@@ -11,8 +11,9 @@
 .Content {
   display: flex;
   flex: 1;
-  background-color: $white;
+  // background-color: $white;
   justify-content: center;
+  flex-direction: column;
 }
 
 .Footer {
