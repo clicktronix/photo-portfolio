@@ -1,3 +1,4 @@
+import React from 'react';
 import Gallery, { PhotoClickHandler } from 'react-photo-gallery';
 import cn from 'classnames';
 
@@ -12,7 +13,7 @@ type GridProps = {
   photos: Photo[];
 };
 
-export function Grid({ photos }: GridProps) {
+export const Grid = React.memo(({ photos }: GridProps) => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const counter = useRef(0);
@@ -49,7 +50,7 @@ export function Grid({ photos }: GridProps) {
           [styles.IsPhotosLoading]: isLoading,
         })}
       >
-        <Gallery margin={2} photos={photos} onClick={onPhotoClick} renderImage={renderPhoto} />
+        <Gallery margin={2} targetRowHeight={650} photos={photos} onClick={onPhotoClick} renderImage={renderPhoto} />
       </div>
       {selectedPhoto && (
         <LightBox
@@ -61,4 +62,6 @@ export function Grid({ photos }: GridProps) {
       )}
     </>
   );
-}
+});
+
+Grid.displayName = 'Grid';
