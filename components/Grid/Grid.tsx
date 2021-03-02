@@ -15,7 +15,7 @@ export const Grid = React.memo(({ photos }: GridProps) => {
 
   return (
     <div className={styles.Grid}>
-      <Gallery photos={photos} targetRowHeight={450} margin={10} />
+      <Gallery photos={photos} targetRowHeight={600} margin={2} />
     </div>
   );
 });
