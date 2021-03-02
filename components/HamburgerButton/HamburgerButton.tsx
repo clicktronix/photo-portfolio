@@ -8,7 +8,7 @@ type HamburgerMenuProps = {
   onClick: () => void;
 };
 
-export const HamburgerMenu = React.memo(({ isClicked, onClick }: HamburgerMenuProps) => {
+export function HamburgerMenu({ isClicked, onClick }: HamburgerMenuProps) {
   return (
     <div
       className={cn(styles.HamburgerIcon, {
@@ -23,6 +23,4 @@ export const HamburgerMenu = React.memo(({ isClicked, onClick }: HamburgerMenuPr
       <span className={cn(styles.Line, styles.ThirdLine)}></span>
     </div>
   );
-});
-
-HamburgerMenu.displayName = 'HamburgerMenu';
+}

@@ -1,5 +1,6 @@
-import { Header } from 'components/Header/Header';
 import React, { ReactChild } from 'react';
+
+import { Header } from 'components/Header/Header';
 
 import styles from './Layout.module.scss';
 

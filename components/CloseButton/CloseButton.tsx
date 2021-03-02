@@ -1,4 +1,5 @@
 import cn from 'classnames';
+
 import styles from './CloseButton.module.scss';
 
 type CloseButtonProps = {

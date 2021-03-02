@@ -1,9 +1,10 @@
-import { Photo } from 'models/photo';
 import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
-import styles from './LightBox.module.scss';
+import { Photo } from 'models/photo';
 import { CloseButton } from 'components/CloseButton/CloseButton';
+
+import styles from './LightBox.module.scss';
 
 type LightBoxProps = {
   currentPhoto: Photo;
@@ -16,7 +17,7 @@ const ESCAPE_KEY = 'Escape';
 const ARROW_RIGHT_KEY = 'ArrowRight';
 const ARROW_LEFT_KEY = 'ArrowLeft';
 
-export function LightBox({ isShow = false, currentPhoto, photos, onClose }: LightBoxProps) {
+export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onClose }: LightBoxProps) => {
   const [photoToShow, setPhotoToShow] = useState<Photo | undefined>(photos.find((x) => x.src === currentPhoto.src));
   const [isLightBoxShow, setIsLightBoxShow] = useState(isShow);
   const [isLoading, setIsLoading] = useState(true);
@@ -75,22 +76,12 @@ export function LightBox({ isShow = false, currentPhoto, photos, onClose }: Ligh
 
   const onShowNext = () => {
     const currentIndex = photos.indexOf(photoToShow);
-    if (currentIndex >= photos.length - 1) {
-      setPhotoToShow(photos[0]);
-    } else {
-      const nextImage = photos[currentIndex + 1];
-      setPhotoToShow(nextImage);
-    }
+    currentIndex >= photos.length - 1 ? setPhotoToShow(photos[0]) : setPhotoToShow(photos[currentIndex + 1]);
   };
 
   const onShowPrev = () => {
     const currentIndex = photos.indexOf(photoToShow);
-    if (currentIndex <= 0) {
-      setPhotoToShow(photos[0]);
-    } else {
-      const nextImage = photos[currentIndex - 1];
-      setPhotoToShow(nextImage);
-    }
+    currentIndex <= 0 ? setPhotoToShow(photos[0]) : setPhotoToShow(photos[currentIndex - 1]);
   };
 
   return (
@@ -118,4 +109,6 @@ export function LightBox({ isShow = false, currentPhoto, photos, onClose }: Ligh
       </div>
     </div>
   );
-}
+});
+
+LightBox.displayName = 'LightBox';

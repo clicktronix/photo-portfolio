@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Gallery, { PhotoClickHandler } from 'react-photo-gallery';
 import cn from 'classnames';
 
 import { Photo } from 'models/photo';
-import { useCallback, useRef, useState } from 'react';
 import { PhotoComponent, PhotoComponentProps } from 'components/Photo/Photo';
 import { LightBox } from 'components/LightBox/LightBox';
 
 import styles from './Grid.module.scss';
+import { isServerSide } from 'helpers/isServerSide';
 
 type GridProps = {
   photos: Photo[];
@@ -39,7 +39,7 @@ export const Grid = React.memo(({ photos }: GridProps) => {
     [],
   );
 
-  if (typeof window === 'undefined') {
+  if (isServerSide()) {
     return null;
   }
 
