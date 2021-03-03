@@ -1,9 +1,10 @@
-import { Photo } from 'models/photo';
 import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
-import styles from './LightBox.module.scss';
+import { Photo } from 'models/photo';
 import { CloseButton } from 'components/CloseButton/CloseButton';
+
+import styles from './LightBox.module.scss';
 
 type LightBoxProps = {
   currentPhoto: Photo;
@@ -16,11 +17,9 @@ const ESCAPE_KEY = 'Escape';
 const ARROW_RIGHT_KEY = 'ArrowRight';
 const ARROW_LEFT_KEY = 'ArrowLeft';
 
-export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProps) {
-  const [photoToShow, setPhotoToShow] = useState<Photo | undefined>(
-    photos.find((x) => x.src === currentPhoto.src),
-  );
-  const [lightBoxDisplay, setLightBoxDisplay] = useState(isShow);
+export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onClose }: LightBoxProps) => {
+  const [photoToShow, setPhotoToShow] = useState<Photo>(currentPhoto);
+  const [isLightBoxShow, setIsLightBoxShow] = useState(isShow);
   const [isLoading, setIsLoading] = useState(true);
   const [isShowControls, setIsShowControls] = useState(false);
   const mouseMoveTimeOut = useRef<NodeJS.Timeout>();
@@ -32,6 +31,7 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(mouseMoveTimeOut.current);
     };
   });
 
@@ -42,10 +42,10 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
         hideLightBox();
         break;
       case ARROW_RIGHT_KEY:
-        showNext();
+        onShowNext();
         break;
       case ARROW_LEFT_KEY:
-        showPrev();
+        onShowPrev();
         break;
       default:
         break;
@@ -67,7 +67,7 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
   };
 
   const hideLightBox = () => {
-    setLightBoxDisplay(false);
+    setIsLightBoxShow(false);
     onClose();
   };
 
@@ -75,37 +75,27 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
     setIsLoading(false);
   };
 
-  const showNext = () => {
+  const onShowNext = () => {
     const currentIndex = photos.indexOf(photoToShow);
-    if (currentIndex >= photos.length - 1) {
-      setPhotoToShow(photos[0]);
-    } else {
-      const nextImage = photos[currentIndex + 1];
-      setPhotoToShow(nextImage);
-    }
+    currentIndex >= photos.length - 1 ? setPhotoToShow(photos[0]) : setPhotoToShow(photos[currentIndex + 1]);
   };
 
-  const showPrev = () => {
+  const onShowPrev = () => {
     const currentIndex = photos.indexOf(photoToShow);
-    if (currentIndex <= 0) {
-      setPhotoToShow(photos[0]);
-    } else {
-      const nextImage = photos[currentIndex - 1];
-      setPhotoToShow(nextImage);
-    }
+    currentIndex <= 0 ? setPhotoToShow(photos[0]) : setPhotoToShow(photos[currentIndex - 1]);
   };
 
   return (
     <div
       className={cn(styles.LightBox, {
-        [styles.IsHide]: !lightBoxDisplay,
+        [styles.IsHide]: !isLightBoxShow,
       })}
     >
       <div className={styles.Wrapper}>
         {isShowControls && (
           <>
             <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
-            <span role="button" tabIndex={0} className={styles.PrevButton} onClick={showPrev} />
+            <span role="button" tabIndex={0} className={styles.PrevButton} onClick={onShowPrev} />
           </>
         )}
         <img
@@ -116,10 +106,10 @@ export function LightBox({ isShow, currentPhoto, photos, onClose }: LightBoxProp
           src={photoToShow.src}
           onLoad={onPhotoLoad}
         />
-        {isShowControls && (
-          <span role="button" tabIndex={-1} className={styles.NextButton} onClick={showNext} />
-        )}
+        {isShowControls && <span role="button" tabIndex={-1} className={styles.NextButton} onClick={onShowNext} />}
       </div>
     </div>
   );
-}
+});
+
+LightBox.displayName = 'LightBox';

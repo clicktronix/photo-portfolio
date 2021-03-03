@@ -1,4 +1,5 @@
 import cn from 'classnames';
+
 import styles from './CloseButton.module.scss';
 
 type CloseButtonProps = {
@@ -8,12 +9,5 @@ type CloseButtonProps = {
 };
 
 export function CloseButton({ tabIndex, classes, onClick }: CloseButtonProps) {
-  return (
-    <span
-      role="button"
-      tabIndex={tabIndex}
-      className={cn([styles.CloseButton, classes])}
-      onClick={onClick}
-    />
-  );
+  return <span role="button" tabIndex={tabIndex} className={cn([styles.CloseButton, classes])} onClick={onClick} />;
 }

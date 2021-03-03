@@ -1,11 +1,13 @@
-import { Photo } from 'models/photo';
+import React from 'react';
 import { RenderImageProps } from 'react-photo-gallery';
+
+import { Photo } from 'models/photo';
 
 export type PhotoComponentProps = {
   onLoad: () => void;
 } & RenderImageProps<Photo>;
 
-export const PhotoComponent = ({ photo, index, margin, onClick, onLoad }: PhotoComponentProps) => {
+export const PhotoComponent = React.memo(({ photo, index, margin, onClick, onLoad }: PhotoComponentProps) => {
   const onImageClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     onClick(e, { ...photo, index });
   };
@@ -19,4 +21,6 @@ export const PhotoComponent = ({ photo, index, margin, onClick, onLoad }: PhotoC
       onLoad={onLoad}
     />
   );
-};
+});
+
+PhotoComponent.displayName = 'PhotoComponent';

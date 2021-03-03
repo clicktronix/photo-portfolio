@@ -1,12 +1,16 @@
+@import 'styles/variables';
+
 .LightBox {
   display: flex;
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   overflow-y: hidden;
   justify-content: center;
   align-items: center;
-  background-color: black;
+  background-color: $black;
   z-index: 100;
 }
 
@@ -36,7 +40,7 @@
   height: 40px;
   left: 5px;
   top: 50%;
-  background-color: black;
+  background-color: $black;
   border-radius: 10px;
   z-index: 10;
 
@@ -66,7 +70,7 @@
   height: 40px;
   right: 5px;
   top: 50%;
-  background-color: black;
+  background-color: $black;
   border-radius: 10px;
   z-index: 10;
 

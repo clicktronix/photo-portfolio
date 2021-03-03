@@ -1,3 +1,6 @@
+@import 'styles/variables';
+@import 'styles/functions';
+
 .Header {
   position: absolute;
   z-index: 100;
@@ -18,7 +21,7 @@
 }
 
 .Title {
-  color: white;
+  color: $white;
   font-weight: 100;
   margin: 0;
   text-transform: uppercase;
@@ -40,13 +43,13 @@
 }
 
 .Link {
-  color: white;
+  color: $white;
   text-decoration: none;
   text-transform: uppercase;
   margin: 20px 30px;
 
   &:hover {
-    text-shadow: 0 0 1px #fff;
+    text-shadow: 0 0 1px $white;
   }
 }
 

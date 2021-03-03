@@ -1,3 +1,9 @@
+@import 'styles/variables';
+
+.Grid {
+  background-color: $black;
+}
+
 .IsPhotosLoading {
   opacity: 0;
 }

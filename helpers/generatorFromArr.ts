@@ -1,3 +1,3 @@
-export function* generatorFromArr<T>(photos: T[]) {
-  yield* photos;
+export function* generatorFromArr<T>(elements: T[]) {
+  yield* elements;
 }

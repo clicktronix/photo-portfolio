@@ -1,8 +1,14 @@
+@import 'styles/variables';
+
+.Container {
+  background-color: $black;
+}
+
 .Photo {
   object-fit: cover;
   height: 100vh;
   width: 100%;
-  padding: 20px;
+  padding: 0 2px 0 2px;
 }
 
 .ImageVisible {
