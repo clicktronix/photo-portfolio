@@ -18,7 +18,7 @@ const ARROW_RIGHT_KEY = 'ArrowRight';
 const ARROW_LEFT_KEY = 'ArrowLeft';
 
 export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onClose }: LightBoxProps) => {
-  const [photoToShow, setPhotoToShow] = useState<Photo | undefined>(photos.find((x) => x.src === currentPhoto.src));
+  const [photoToShow, setPhotoToShow] = useState<Photo | undefined>(currentPhoto);
   const [isLightBoxShow, setIsLightBoxShow] = useState(isShow);
   const [isLoading, setIsLoading] = useState(true);
   const [isShowControls, setIsShowControls] = useState(false);
