@@ -6,9 +6,9 @@ import { CONFIG } from 'core/config';
 import { generatorFromArr } from 'helpers/generatorFromArr';
 import { Photo, PhotoResponse } from 'models/photo';
 import { Layout } from 'components/Layout/Layout';
+import { Grid } from 'components/Grid/Grid';
 
 import styles from './Main.module.scss';
-import { Grid } from 'components/Grid/Grid';
 
 type MainProps = {
   mainScreenPhotos: Photo[];

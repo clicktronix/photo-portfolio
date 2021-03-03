@@ -5,9 +5,9 @@ import cn from 'classnames';
 import { Photo } from 'models/photo';
 import { PhotoComponent, PhotoComponentProps } from 'components/Photo/Photo';
 import { LightBox } from 'components/LightBox/LightBox';
+import { isServerSide } from 'helpers/isServerSide';
 
 import styles from './Grid.module.scss';
-import { isServerSide } from 'helpers/isServerSide';
 
 type GridProps = {
   photos: Photo[];
