@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import cn from 'classnames';
-
 import Link from 'next/link';
 
 import { HamburgerMenu } from '../HamburgerButton/HamburgerButton';
@@ -31,8 +30,8 @@ export function Header() {
           <Link href="/">
             <a className={styles.Link}>главная</a>
           </Link>
-          <Link href="/grid">
-            <a className={styles.Link}>фото</a>
+          <Link href="/albums">
+            <a className={styles.Link}>альбомы</a>
           </Link>
           <Link href="/contacts">
             <a className={styles.Link}>контакты</a>
