@@ -33,6 +33,9 @@ export function Header() {
           <Link href="/albums">
             <a className={styles.Link}>альбомы</a>
           </Link>
+          <Link href="/about">
+            <a className={styles.Link}>о фотографе</a>
+          </Link>
           <Link href="/contacts">
             <a className={styles.Link}>контакты</a>
           </Link>

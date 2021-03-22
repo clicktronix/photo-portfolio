@@ -1,35 +1,37 @@
 import { GetStaticProps } from 'next';
-import { AlbumComponent } from 'components/Album/Album';
+
+import { AlbumPreview } from 'components/AlbumPreview/AlbumPreview';
 import { CONFIG } from 'core/config';
 import { Album } from 'models/album';
 import { Layout } from 'components/Layout/Layout';
 
-type AlbumProps = {
+import styles from './AlbumsPage.module.scss';
+
+type AlbumsProps = {
   albums: Album[];
 };
 
-export default function Albums({ albums }: AlbumProps) {
+export default function AlbumsPage({ albums }: AlbumsProps) {
   return (
-    <Layout withFooter={true}>
-      {albums.map((x) => (
-        <AlbumComponent name={x.name} description={x.description} key={x.name} />
-      ))}
+    <Layout withFooter>
+      <div className={styles.AlbumsPage}>
+        {albums.map((x) => (
+          <AlbumPreview {...x} key={x.name} />
+        ))}
+      </div>
     </Layout>
   );
 }
 
-export const getStaticProps: GetStaticProps<AlbumProps> = async () => {
+export const getStaticProps: GetStaticProps<AlbumsProps> = async () => {
   const albumResponse: Album[] = await fetch(`${CONFIG.baseUrl}/api/v1/albums`)
     .then((res) => res.json())
     .catch((err) => err.json());
-  const mainScreenPhotos = albumResponse.map((x) => ({
-    name: x.name,
-    description: x.description,
-  }));
+  const albums = albumResponse.map((album) => ({ ...album }));
 
   return {
     props: {
-      albums: mainScreenPhotos,
+      albums,
     },
   };
 };
