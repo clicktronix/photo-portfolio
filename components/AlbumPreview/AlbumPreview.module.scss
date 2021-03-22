@@ -1,0 +1,58 @@
+@import 'styles/variables';
+
+.Album {
+  position: relative;
+  max-width: 440px;
+  height: 600px;
+  background-color: $dark-grey;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: transform .5s, filter .5s ease-in-out;
+  transform-origin: center center;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  &:hover > img {
+    transition: transform .5s, filter .5s ease-in-out;
+    filter: brightness(35%);
+  }
+}
+
+.PreviewPhoto {
+  width: 100%;
+  padding: 8px;
+  object-fit: cover;
+}
+
+.Name {
+  position: absolute;
+  top: 15px;
+  left: 50px;
+  right: 50px;
+  color: white;
+  font-weight: 100;
+  animation: fadeIn 1.2s
+}
+
+.Description {
+  position: absolute;
+  bottom: 35px;
+  left: 50px;
+  right: 50px;
+  color: white;
+  font-weight: 200;
+  animation: fadeIn 1.2s
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

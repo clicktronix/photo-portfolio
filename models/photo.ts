@@ -1,7 +1,7 @@
 export type PhotoResponse = {
   id: number;
   created: string;
-  img: string;
+  src: string;
   width: number;
   height: number;
   is_grid: boolean;

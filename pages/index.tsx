@@ -96,22 +96,22 @@ export default class Main extends PureComponent<MainProps, State> {
 export const getStaticProps: GetStaticProps<MainProps> = async () => {
   const mainScreenResponse: PhotoResponse[] = await fetch(`${CONFIG.baseUrl}/api/v1/photos/main-screen`)
     .then((res) => res.json())
-    .catch((err) => err.json());
+    .catch((err) => err);
   const mainScreenPhotos = mainScreenResponse.map((x) => ({
     width: x.width,
     height: x.height,
-    src: x.img,
+    src: x.src,
   }));
 
   const gridResponse: PhotoResponse[] = await fetch(`${CONFIG.baseUrl}/api/v1/photos/grid`)
     .then((res) => res.json())
-    .catch((err) => err.json());
+    .catch((err) => err);
   const gridPhotos = gridResponse
     .filter((x) => Boolean(x.is_grid))
     .map((x) => ({
       width: x.width,
       height: x.height,
-      src: x.img,
+      src: x.src,
     }));
 
   return {
