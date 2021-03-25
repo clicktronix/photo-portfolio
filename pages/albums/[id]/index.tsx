@@ -1,17 +1,22 @@
-import { GetServerSidePropsContext, GetStaticProps } from 'next';
+import { GetStaticPropsContext, GetStaticProps, GetStaticPaths } from 'next';
 
 import { CONFIG } from 'core/config';
 import { Album, AlbumResponse } from 'models/album';
 import { Layout } from 'components/Layout/Layout';
 import { Grid } from 'components/Grid/Grid';
 
-type AlbumProps = Album;
+type AlbumProps = {
+  album?: Album;
+  error?: string;
+};
 
-export default function AlbumPage({ photos }: AlbumProps) {
-  return <Layout withFooter={false}>{photos && <Grid photos={photos} />}</Layout>;
+export default function AlbumPage(props: AlbumProps) {
+  const { album, error } = props;
+
+  return <Layout withFooter={false}>{<Grid photos={album ? album.photos : []} />}</Layout>;
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const albumsResponse: AlbumResponse[] = await fetch(`${CONFIG.baseUrl}/api/v1/albums`)
     .then((res) => res.json())
     .catch((err) => err.json());
@@ -24,15 +29,24 @@ export async function getStaticPaths() {
     paths,
     fallback: true,
   };
-}
+};
 
-export const getStaticProps: GetStaticProps<AlbumProps> = async ({ params }: GetServerSidePropsContext) => {
+export const getStaticProps: GetStaticProps<AlbumProps> = async ({ params }: GetStaticPropsContext) => {
+  if (!params) {
+    return {
+      props: {
+        error: 'There is no params at the url',
+      },
+    };
+  }
   const { id } = params;
   const albumResponse: AlbumResponse = await fetch(`${CONFIG.baseUrl}/api/v1/albums/${id}`)
     .then((res) => res.json())
     .catch((err) => err.json());
 
   return {
-    props: albumResponse,
+    props: {
+      album: albumResponse,
+    },
   };
 };
