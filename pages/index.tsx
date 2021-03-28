@@ -18,8 +18,11 @@ type MainProps = {
 type State = {
   isLoading: boolean;
   timeoutIds: NodeJS.Timeout[];
-  currentPhoto: IteratorResult<Photo | undefined>;
+  currentPhoto: IteratorResult<Photo> | undefined;
 };
+
+const PHOTO_MARGIN = 2;
+const PHOTO_ROW_HEIGHT = 500;
 
 export default class Main extends PureComponent<MainProps, State> {
   public state: State = {
@@ -87,7 +90,7 @@ export default class Main extends PureComponent<MainProps, State> {
             />
           )}
         </div>
-        <Grid photos={this.props.gridPhotos} />
+        <Grid margin={PHOTO_MARGIN} targetRowHeight={PHOTO_ROW_HEIGHT} photos={this.props.gridPhotos} />
       </Layout>
     );
   }

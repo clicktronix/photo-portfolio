@@ -9,14 +9,17 @@ export type PhotoComponentProps = {
 
 export const PhotoComponent = React.memo(({ photo, index, margin, onClick, onLoad }: PhotoComponentProps) => {
   const onImageClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-    onClick(e, { ...photo, index });
+    onClick && onClick(e, { ...photo, index });
   };
 
   return (
     <img
-      alt="grid"
+      alt="grid-item"
       style={{ margin, height: photo.height, width: photo.width }}
-      {...(photo as any)}
+      src={photo.src}
+      width={photo.width}
+      height={photo.height}
+      key={photo.key}
       onClick={onImageClick}
       onLoad={onLoad}
     />

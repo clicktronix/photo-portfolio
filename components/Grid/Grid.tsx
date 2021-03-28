@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react';
-import Gallery, { PhotoClickHandler } from 'react-photo-gallery';
+import React, { useCallback, useRef, useState, MouseEvent } from 'react';
+import Gallery, { GalleryProps } from 'react-photo-gallery';
 import cn from 'classnames';
 
 import { Photo } from 'models/photo';
@@ -11,14 +11,16 @@ import styles from './Grid.module.scss';
 
 type GridProps = {
   photos: Photo[];
-};
+} & GalleryProps;
 
-export const Grid = React.memo(({ photos }: GridProps) => {
+type OnPhotoClickHandler = (e: MouseEvent, el: { index: number; photo: Photo }) => void;
+
+export const Grid = React.memo(({ photos, margin, targetRowHeight }: GridProps) => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const counter = useRef(0);
 
-  const onPhotoClick: PhotoClickHandler<Photo> = (event, { photo }) => {
+  const onPhotoClick: OnPhotoClickHandler = (_, { photo }) => {
     setSelectedPhoto(photo);
   };
 
@@ -35,7 +37,7 @@ export const Grid = React.memo(({ photos }: GridProps) => {
   };
 
   const renderPhoto = useCallback(
-    ({ ...props }: PhotoComponentProps) => <PhotoComponent onLoad={onPhotoLoaded} {...props} />,
+    ({ ...props }: Omit<PhotoComponentProps, 'onLoad'>) => <PhotoComponent {...props} onLoad={onPhotoLoaded} />,
     [],
   );
 
@@ -50,7 +52,13 @@ export const Grid = React.memo(({ photos }: GridProps) => {
           [styles.IsPhotosLoading]: isLoading,
         })}
       >
-        <Gallery margin={2} targetRowHeight={650} photos={photos} onClick={onPhotoClick} renderImage={renderPhoto} />
+        <Gallery
+          margin={margin}
+          targetRowHeight={targetRowHeight}
+          photos={photos}
+          onClick={onPhotoClick}
+          renderImage={renderPhoto}
+        />
       </div>
       {selectedPhoto && (
         <LightBox

@@ -1,0 +1,57 @@
+@import 'styles/variables';
+
+$size: 30px;
+$width: 2px;
+
+.BackButton {
+  cursor: pointer;
+  display: block;
+  width: $size / 1.414;
+  height: $size / 1.414 * 2;
+  position: absolute;
+  background-color: $black;
+  
+  & span,
+  &:before,
+  &:after {
+    background: #fff;
+    content: '';
+    display: block;
+    width: $size;
+    height: $width;
+    position: absolute;
+    top: calc(50% - (#{$width} / 2));
+    left: 0;
+    transform-origin: left 50%;
+  }
+
+  &:before {
+    transform: rotate(-45deg);
+  }
+
+  &:after {
+    transform: rotate(45deg);
+  }
+
+  &:before,
+  &:after {
+    transition: left 0.3s 0.05s;
+  }
+
+  & span {
+    width: 0;
+    transition: width 0.3s, left 0.3s 0.05s;
+  }
+
+  &:hover span {
+    width: $size * 1.414;
+  }
+
+  &:hover {
+    & span,
+    &:before,
+    &:after {
+      left: $size / 1.414 * -1;
+    }
+  }
+}
