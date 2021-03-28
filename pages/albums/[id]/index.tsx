@@ -52,6 +52,7 @@ export const getStaticProps: GetStaticProps<AlbumProps> = async ({ params }: Get
       },
     };
   }
+
   const { id } = params;
   const albumResponse: AlbumResponse = await fetch(`${CONFIG.baseUrl}/api/v1/albums/${id}`)
     .then((res) => res.json())
