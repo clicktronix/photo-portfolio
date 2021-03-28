@@ -14,7 +14,7 @@ type MainProps = {
 const PHOTO_MARGIN = 2;
 const PHOTO_ROW_HEIGHT = 500;
 
-export function Main({ mainScreenPhotos, gridPhotos }: MainProps) {
+export default function Main({ mainScreenPhotos, gridPhotos }: MainProps) {
   return (
     <Layout withFooter={false}>
       <Banner photos={mainScreenPhotos} />
