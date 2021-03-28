@@ -2,9 +2,7 @@ import { GetStaticProps } from 'next';
 
 import { CONFIG } from 'core/config';
 import { Photo, PhotoResponse } from 'models/photo';
-import { Layout } from 'components/Layout/Layout';
-import { Grid } from 'components/Grid/Grid';
-import { Banner } from 'components/Banner/Banner';
+import { Layout, Grid, Banner } from 'components';
 
 type MainProps = {
   mainScreenPhotos: Photo[];

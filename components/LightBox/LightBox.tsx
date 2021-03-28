@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
 import { Photo } from 'models/photo';
-import { CloseButton } from 'components/CloseButton/CloseButton';
+
+import { CloseButton } from '../CloseButton/CloseButton';
 
 import styles from './LightBox.module.scss';
 

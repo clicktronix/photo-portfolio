@@ -2,9 +2,7 @@ import { GetStaticPropsContext, GetStaticProps, GetStaticPaths } from 'next';
 
 import { CONFIG } from 'core/config';
 import { Album, AlbumResponse } from 'models/album';
-import { Layout } from 'components/Layout/Layout';
-import { Grid } from 'components/Grid/Grid';
-import { BackButton } from 'components/BackButton/BackButton';
+import { Layout, Grid, BackButton } from 'components';
 
 import styles from './Album.module.scss';
 
