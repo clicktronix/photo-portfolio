@@ -1,0 +1,75 @@
+@import 'styles/variables';
+
+$transition-time: .15s;
+
+.PrevButton {
+  cursor: pointer;
+  height: 50px;
+  position: absolute;
+  left: 23px;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  transition: transform .1s;
+  width: 35px;
+  background-color: $black;
+  border-radius: 10px;
+
+  .PrevButtonTop,
+  .PrevButtonBottom {
+    background-color: #666;
+    height: 2px;
+    left: 7px;
+    position: absolute;
+    top: 46%;
+    width: 70%;
+    border: 0;
+    padding: 0;
+
+    &:after {
+      background-color: #fff;
+      content: '';
+      height: 100%;
+      position: absolute;
+      top: 0;
+      transition: all $transition-time;
+    }
+  }
+
+  .PrevButtonTop {
+    transform: rotate(315deg);
+    transform-origin: bottom left;
+
+    &:after {
+      right: 100%;
+      left: 0;
+      transition-delay: 0s;
+    }
+  }
+
+  .PrevButtonBottom {
+    transform: rotate(45deg);
+    transform-origin: top left;
+
+    &:after {
+      right: 0;
+      left: 100%;
+      transition-delay: $transition-time;
+    }
+  }
+
+  &:hover {
+    .PrevButtonTop:after {
+      right: 0;
+      transition-delay: $transition-time;
+    }
+
+    .PrevButtonBottom:after {
+      left: 0;
+      transition-delay: 0s;
+    }
+  }
+
+  &:active {
+    transform: translateX(-50%) translateY(-50%) scale(0.9);
+  }
+}

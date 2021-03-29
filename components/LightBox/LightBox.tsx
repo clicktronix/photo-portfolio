@@ -4,6 +4,8 @@ import cn from 'classnames';
 import { Photo } from 'models/photo';
 
 import { CloseButton } from '../CloseButton/CloseButton';
+import { PrevButton } from './PrevButton/PrevButton';
+import { NextButton } from './NextButton/NextButton';
 
 import styles from './LightBox.module.scss';
 
@@ -43,10 +45,10 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
         hideLightBox();
         break;
       case ARROW_RIGHT_KEY:
-        onShowNext();
+        onNextClickHandler();
         break;
       case ARROW_LEFT_KEY:
-        onShowPrev();
+        onPrevClickHandler();
         break;
       default:
         break;
@@ -76,12 +78,12 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
     setIsLoading(false);
   };
 
-  const onShowNext = () => {
+  const onNextClickHandler = () => {
     const currentIndex = photos.indexOf(photoToShow);
     currentIndex >= photos.length - 1 ? setPhotoToShow(photos[0]) : setPhotoToShow(photos[currentIndex + 1]);
   };
 
-  const onShowPrev = () => {
+  const onPrevClickHandler = () => {
     const currentIndex = photos.indexOf(photoToShow);
     currentIndex <= 0 ? setPhotoToShow(photos[0]) : setPhotoToShow(photos[currentIndex - 1]);
   };
@@ -93,15 +95,6 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
       })}
     >
       <div className={styles.Wrapper}>
-        {isShowControls && (
-          <>
-            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
-            <div role="button" tabIndex={0} className={styles.PrevButton} onClick={onShowPrev}>
-              <div className={styles.PrevButtonTop} />
-              <div className={styles.PrevButtonBottom} />
-            </div>
-          </>
-        )}
         <img
           className={cn(styles.Photo, {
             [styles.IsPhotoLoading]: isLoading,
@@ -111,10 +104,11 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
           onLoad={onPhotoLoad}
         />
         {isShowControls && (
-          <div role="button" tabIndex={-1} className={styles.NextButton} onClick={onShowNext}>
-            <div className={styles.NextButtonTop} />
-            <div className={styles.NextButtonBottom} />
-          </div>
+          <>
+            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
+            <PrevButton onClick={onPrevClickHandler} />
+            <NextButton onClick={onNextClickHandler} />
+          </>
         )}
       </div>
     </div>
