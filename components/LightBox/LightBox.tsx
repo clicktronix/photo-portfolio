@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
+import Image from 'next/image';
 
 import { Photo } from 'models/photo';
 
@@ -95,13 +96,15 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
       })}
     >
       <div className={styles.Wrapper}>
-        <img
+        <Image
           className={cn(styles.Photo, {
             [styles.IsPhotoLoading]: isLoading,
           })}
           alt={photoToShow.src}
           src={photoToShow.src}
           onLoad={onPhotoLoad}
+          width={photoToShow.width}
+          height={photoToShow.height}
         />
         {isShowControls && (
           <>
