@@ -1,6 +1,6 @@
 import React, { ReactChild } from 'react';
 
-import { Header } from 'components/Header/Header';
+import { Header } from '../Header/Header';
 
 import styles from './Layout.module.scss';
 
@@ -9,7 +9,7 @@ type Props = {
   children: ReactChild | ReactChild[];
 };
 
-export const Layout = React.memo(({ withFooter, children }: Props) => {
+export function Layout({ withFooter, children }: Props) {
   return (
     <div className={styles.Wrapper}>
       <Header />
@@ -17,6 +17,4 @@ export const Layout = React.memo(({ withFooter, children }: Props) => {
       {withFooter && <footer className={styles.Footer}>clicktronix@hotmail.com</footer>}
     </div>
   );
-});
-
-Layout.displayName = 'Layout';
+}

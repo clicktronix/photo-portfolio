@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
+import Image from 'next/image';
 
 import { Photo } from 'models/photo';
-import { CloseButton } from 'components/CloseButton/CloseButton';
+
+import { CloseButton } from '../CloseButton/CloseButton';
+import { PrevButton } from './PrevButton/PrevButton';
+import { NextButton } from './NextButton/NextButton';
 
 import styles from './LightBox.module.scss';
 
@@ -31,7 +35,7 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousemove', handleMouseMove);
-      clearTimeout(mouseMoveTimeOut.current);
+      mouseMoveTimeOut.current && clearTimeout(mouseMoveTimeOut.current);
     };
   });
 
@@ -42,10 +46,10 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
         hideLightBox();
         break;
       case ARROW_RIGHT_KEY:
-        onShowNext();
+        onNextClickHandler();
         break;
       case ARROW_LEFT_KEY:
-        onShowPrev();
+        onPrevClickHandler();
         break;
       default:
         break;
@@ -53,7 +57,7 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
   };
 
   const handleMouseMove = () => {
-    clearTimeout(mouseMoveTimeOut.current);
+    mouseMoveTimeOut.current && clearTimeout(mouseMoveTimeOut.current);
     showControls();
     mouseMoveTimeOut.current = setTimeout(hideControls, 1500);
   };
@@ -68,19 +72,19 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
 
   const hideLightBox = () => {
     setIsLightBoxShow(false);
-    onClose();
+    onClose && onClose();
   };
 
   const onPhotoLoad = () => {
     setIsLoading(false);
   };
 
-  const onShowNext = () => {
+  const onNextClickHandler = () => {
     const currentIndex = photos.indexOf(photoToShow);
     currentIndex >= photos.length - 1 ? setPhotoToShow(photos[0]) : setPhotoToShow(photos[currentIndex + 1]);
   };
 
-  const onShowPrev = () => {
+  const onPrevClickHandler = () => {
     const currentIndex = photos.indexOf(photoToShow);
     currentIndex <= 0 ? setPhotoToShow(photos[0]) : setPhotoToShow(photos[currentIndex - 1]);
   };
@@ -92,21 +96,23 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
       })}
     >
       <div className={styles.Wrapper}>
-        {isShowControls && (
-          <>
-            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
-            <span role="button" tabIndex={0} className={styles.PrevButton} onClick={onShowPrev} />
-          </>
-        )}
-        <img
+        <Image
           className={cn(styles.Photo, {
             [styles.IsPhotoLoading]: isLoading,
           })}
           alt={photoToShow.src}
           src={photoToShow.src}
           onLoad={onPhotoLoad}
+          width={photoToShow.width}
+          height={photoToShow.height}
         />
-        {isShowControls && <span role="button" tabIndex={-1} className={styles.NextButton} onClick={onShowNext} />}
+        {isShowControls && (
+          <>
+            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
+            <PrevButton onClick={onPrevClickHandler} />
+            <NextButton onClick={onNextClickHandler} />
+          </>
+        )}
       </div>
     </div>
   );

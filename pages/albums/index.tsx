@@ -1,9 +1,8 @@
 import { GetStaticProps } from 'next';
 
-import { AlbumPreview } from 'components/AlbumPreview/AlbumPreview';
+import { AlbumPreview, Layout } from 'components';
 import { CONFIG } from 'core/config';
 import { Album } from 'models/album';
-import { Layout } from 'components/Layout/Layout';
 
 import styles from './AlbumsPage.module.scss';
 

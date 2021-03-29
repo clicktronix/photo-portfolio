@@ -33,65 +33,6 @@
   display: none;
 }
 
-.PrevButton {
-  content: '';
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 5px;
-  top: 50%;
-  background-color: $black;
-  border-radius: 10px;
-  z-index: 10;
-
-  &::after {
-    content: url(./img/next.svg);
-    position: absolute;
-    cursor: pointer;
-    width: 28px;
-    height: 28px;
-    right: 6px;
-    top: 6px;
-    transform: rotate(180deg);
-    transition: all 0.5s ease-out;
-    z-index: 10;
-  }
-
-  &:hover::after {
-    transform: rotate(540deg);
-    transition: all 0.5s ease-out;
-  }
-}
-
-.NextButton {
-  content: '';
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  right: 5px;
-  top: 50%;
-  background-color: $black;
-  border-radius: 10px;
-  z-index: 10;
-
-  &::after {
-    content: url(./img/next.svg);
-    position: absolute;
-    cursor: pointer;
-    width: 28px;
-    height: 28px;
-    right: 6px;
-    top: 6px;
-    transition: all 0.5s ease-out;
-    z-index: 10;
-  }
-
-  &:hover::after {
-    transform: rotate(360deg);
-    transition: all 0.5s ease-out;
-  }
-}
-
 .HideButton {
   right: 5px;
   top: 5px;
