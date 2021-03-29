@@ -96,7 +96,10 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
         {isShowControls && (
           <>
             <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
-            <span role="button" tabIndex={0} className={styles.PrevButton} onClick={onShowPrev} />
+            <div role="button" tabIndex={0} className={styles.PrevButton} onClick={onShowPrev}>
+              <div className={styles.PrevButtonTop} />
+              <div className={styles.PrevButtonBottom} />
+            </div>
           </>
         )}
         <img
@@ -107,7 +110,12 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
           src={photoToShow.src}
           onLoad={onPhotoLoad}
         />
-        {isShowControls && <span role="button" tabIndex={-1} className={styles.NextButton} onClick={onShowNext} />}
+        {isShowControls && (
+          <div role="button" tabIndex={-1} className={styles.NextButton} onClick={onShowNext}>
+            <div className={styles.NextButtonTop} />
+            <div className={styles.NextButtonBottom} />
+          </div>
+        )}
       </div>
     </div>
   );

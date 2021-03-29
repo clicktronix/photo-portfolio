@@ -1,5 +1,7 @@
 @import 'styles/variables';
 
+$transition-time: .15s;
+
 .LightBox {
   display: flex;
   position: fixed;
@@ -34,61 +36,143 @@
 }
 
 .PrevButton {
-  content: '';
+  cursor: pointer;
+  height: 50px;
   position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 5px;
+  left: 23px;
   top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  transition: transform .1s;
+  width: 35px;
   background-color: $black;
   border-radius: 10px;
   z-index: 10;
 
-  &::after {
-    content: url(./img/next.svg);
+  .PrevButtonTop,
+  .PrevButtonBottom {
+    background-color: #666;
+    height: 2px;
+    left: 7px;
     position: absolute;
-    cursor: pointer;
-    width: 28px;
-    height: 28px;
-    right: 6px;
-    top: 6px;
-    transform: rotate(180deg);
-    transition: all 0.5s ease-out;
-    z-index: 10;
+    top: 46%;
+    width: 70%;
+
+    &:after {
+      background-color: #fff;
+      content: '';
+      height: 100%;
+      position: absolute;
+      top: 0;
+      transition: all $transition-time;
+    }
   }
 
-  &:hover::after {
-    transform: rotate(540deg);
-    transition: all 0.5s ease-out;
+  .PrevButtonTop {
+    transform: rotate(315deg);
+    transform-origin: bottom left;
+
+    &:after {
+      right: 100%;
+      left: 0;
+      transition-delay: 0s;
+    }
+  }
+
+  .PrevButtonBottom {
+    transform: rotate(45deg);
+    transform-origin: top left;
+
+    &:after {
+      right: 0;
+      left: 100%;
+      transition-delay: $transition-time;
+    }
+  }
+
+  &:hover {
+    .PrevButtonTop:after {
+      right: 0;
+      transition-delay: $transition-time;
+    }
+
+    .PrevButtonBottom:after {
+      left: 0;
+      transition-delay: 0s;
+    }
+  }
+
+  &:active {
+    transform: translateX(-50%) translateY(-50%) scale(0.9);
   }
 }
 
 .NextButton {
-  content: '';
+  cursor: pointer;
+  height: 50px;
   position: absolute;
-  width: 40px;
-  height: 40px;
-  right: 5px;
+  right: -12px;
   top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  transition: transform .1s;
+  width: 35px;
   background-color: $black;
   border-radius: 10px;
-  z-index: 10;
 
-  &::after {
-    content: url(./img/next.svg);
+  .NextButtonTop,
+  .NextButtonBottom {
+    background-color: #666;
+    height: 2px;
+    left: 3px;
     position: absolute;
-    cursor: pointer;
-    width: 28px;
-    height: 28px;
-    right: 6px;
-    top: 6px;
-    transition: all 0.5s ease-out;
-    z-index: 10;
+    top: 46%;
+    width: 70%;
+
+    &:after {
+      background-color: #fff;
+      content: '';
+      height: 100%;
+      position: absolute;
+      top: 0;
+      transition: all $transition-time;
+    }
   }
 
-  &:hover::after {
-    transform: rotate(360deg);
-    transition: all 0.5s ease-out;
+  .NextButtonTop {
+    transform: rotate(45deg);
+    transform-origin: bottom right;
+
+    &:after {
+      left: 100%;
+      right: 0;
+      transition-delay: 0s;
+    }
+  }
+
+  .NextButtonBottom {
+    transform: rotate(-45deg);
+    transform-origin: top right;
+
+    &:after {
+      left: 0;
+      right: 100%;
+      transition-delay: $transition-time;
+    }
+  }
+
+  &:hover {
+    .NextButtonTop:after {
+      left: 0;
+      transition-delay: $transition-time;
+    }
+
+    .NextButtonBottom:after {
+      right: 0;
+      transition-delay: 0s;
+    }
+  }
+
+  &:active {
+    transform: translateX(-50%) translateY(-50%) scale(0.9);
   }
 }
 
