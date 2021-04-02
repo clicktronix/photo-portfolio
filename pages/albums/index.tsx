@@ -4,7 +4,7 @@ import { AlbumPreview, Layout } from 'components';
 import { Album } from 'models/album';
 
 import styles from './AlbumsPage.module.scss';
-import { Api } from 'services/api';
+import { api } from 'services/api';
 
 type AlbumsProps = {
   albums?: Album[];
@@ -24,8 +24,6 @@ export default function AlbumsPage({ albums = [], error = '' }: AlbumsProps) {
 }
 
 export const getStaticProps: GetStaticProps<AlbumsProps> = async () => {
-  const api = new Api();
-
   try {
     const albums = await api.albums.getAlbums();
 

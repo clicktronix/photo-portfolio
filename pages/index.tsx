@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 
 import { Photo } from 'models/photo';
 import { Layout, Grid, Banner } from 'components';
-import { Api } from 'services/api';
+import { api } from 'services/api';
 
 type MainProps = {
   mainScreenPhotos: Photo[];
@@ -23,8 +23,6 @@ export default function Main({ mainScreenPhotos, gridPhotos }: MainProps) {
 }
 
 export const getStaticProps: GetStaticProps<MainProps> = async () => {
-  const api = new Api();
-
   try {
     const mainScreenPhotos = await api.photos.getMainScreenPhoto();
     const gridPhotos = await api.photos.getMainScreenPhoto();

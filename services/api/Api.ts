@@ -17,4 +17,4 @@ class Api {
   }
 }
 
-export { Api };
+export const api = new Api();

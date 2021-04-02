@@ -4,7 +4,7 @@ import { Album } from 'models/album';
 import { Layout, Grid, BackButton } from 'components';
 
 import styles from './Album.module.scss';
-import { Api } from 'services/api';
+import { api } from 'services/api';
 
 type AlbumProps = {
   album?: Album;
@@ -26,8 +26,6 @@ export default function AlbumPage({ album, error = '' }: AlbumProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const api = new Api();
-
   const albumsResponse = await api.albums.getAlbums();
 
   const paths = albumsResponse.map((a) => ({
@@ -49,7 +47,6 @@ export const getStaticProps: GetStaticProps<AlbumProps> = async ({ params }: Get
     };
   }
   const { id } = params;
-  const api = new Api();
 
   try {
     const album = await api.albums.getAlbum(id);
