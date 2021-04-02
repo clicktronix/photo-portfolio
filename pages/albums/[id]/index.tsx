@@ -1,10 +1,10 @@
 import { GetStaticPropsContext, GetStaticProps, GetStaticPaths } from 'next';
 
-import { CONFIG } from 'core/config';
-import { Album, AlbumResponse } from 'models/album';
+import { Album } from 'models/album';
 import { Layout, Grid, BackButton } from 'components';
 
 import styles from './Album.module.scss';
+import { Api } from 'services/api';
 
 type AlbumProps = {
   album?: Album;
@@ -14,9 +14,7 @@ type AlbumProps = {
 const PHOTO_MARGIN = 5;
 const PHOTO_ROW_HEIGHT = 400;
 
-export default function AlbumPage(props: AlbumProps) {
-  const { album, error } = props;
-
+export default function AlbumPage({ album, error = '' }: AlbumProps) {
   return (
     <Layout withFooter={false}>
       <BackButton className={styles.BackButton} />
@@ -28,9 +26,9 @@ export default function AlbumPage(props: AlbumProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const albumsResponse: AlbumResponse[] = await fetch(`${CONFIG.baseUrl}/api/v1/albums`)
-    .then((res) => res.json())
-    .catch((err) => err.json());
+  const api = new Api();
+
+  const albumsResponse = await api.albums.getAlbums();
 
   const paths = albumsResponse.map((a) => ({
     params: { id: a.id.toString() },
@@ -43,22 +41,29 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps<AlbumProps> = async ({ params }: GetStaticPropsContext) => {
-  if (!params) {
+  if (!params || !params?.id || Array.isArray(params?.id)) {
     return {
       props: {
         error: 'There is no params at the url',
       },
     };
   }
-
   const { id } = params;
-  const albumResponse: AlbumResponse = await fetch(`${CONFIG.baseUrl}/api/v1/albums/${id}`)
-    .then((res) => res.json())
-    .catch((err) => err.json());
+  const api = new Api();
 
-  return {
-    props: {
-      album: albumResponse,
-    },
-  };
+  try {
+    const album = await api.albums.getAlbum(id);
+
+    return {
+      props: {
+        album,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        error: err,
+      },
+    };
+  }
 };
