@@ -5,6 +5,7 @@ import { Album } from 'models/album';
 
 import styles from './AlbumsPage.module.scss';
 import { api } from 'services/api';
+import { Error } from 'components/Error/Error';
 
 type AlbumsProps = {
   albums?: Album[];
@@ -12,6 +13,10 @@ type AlbumsProps = {
 };
 
 export default function AlbumsPage({ albums = [], error = '' }: AlbumsProps) {
+  if (error) {
+    return <Error title={error} />;
+  }
+
   return (
     <Layout withFooter>
       <div className={styles.AlbumsPage}>
@@ -35,7 +40,7 @@ export const getStaticProps: GetStaticProps<AlbumsProps> = async () => {
   } catch (err) {
     return {
       props: {
-        error: err,
+        error: err.message,
       },
     };
   }

@@ -3,17 +3,22 @@ import { GetStaticProps } from 'next';
 import { Photo } from 'models/photo';
 import { Layout, Grid, Banner } from 'components';
 import { api } from 'services/api';
+import { Error } from 'components/Error/Error';
 
 type MainProps = {
   mainScreenPhotos: Photo[];
   gridPhotos: Photo[];
-  error: string;
+  error?: string;
 };
 
 const PHOTO_MARGIN = 2;
 const PHOTO_ROW_HEIGHT = 500;
 
-export default function Main({ mainScreenPhotos, gridPhotos }: MainProps) {
+export default function Main({ mainScreenPhotos, gridPhotos, error }: MainProps) {
+  if (error) {
+    return <Error title={error} />;
+  }
+
   return (
     <Layout withFooter={false}>
       <Banner photos={mainScreenPhotos} />
@@ -31,7 +36,6 @@ export const getStaticProps: GetStaticProps<MainProps> = async () => {
       props: {
         mainScreenPhotos,
         gridPhotos,
-        error: '',
       },
     };
   } catch (err) {
@@ -39,7 +43,7 @@ export const getStaticProps: GetStaticProps<MainProps> = async () => {
       props: {
         mainScreenPhotos: [],
         gridPhotos: [],
-        error: err,
+        error: err.message,
       },
     };
   }

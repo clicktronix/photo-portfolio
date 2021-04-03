@@ -5,6 +5,7 @@ import { Layout, Grid, BackButton } from 'components';
 
 import styles from './Album.module.scss';
 import { api } from 'services/api';
+import { Error } from 'components/Error/Error';
 
 type AlbumProps = {
   album?: Album;
@@ -15,6 +16,10 @@ const PHOTO_MARGIN = 5;
 const PHOTO_ROW_HEIGHT = 400;
 
 export default function AlbumPage({ album, error = '' }: AlbumProps) {
+  if (error) {
+    return <Error title={error} />;
+  }
+
   return (
     <Layout withFooter={false}>
       <BackButton className={styles.BackButton} />
@@ -59,7 +64,7 @@ export const getStaticProps: GetStaticProps<AlbumProps> = async ({ params }: Get
   } catch (err) {
     return {
       props: {
-        error: err,
+        error: err.message,
       },
     };
   }

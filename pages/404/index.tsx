@@ -1,3 +1,7 @@
-export default function NotFoundPage() {
-  return <h1>404 - Page Not Found</h1>;
+import { ErrorProps } from 'next/error';
+
+import Error from '../_error';
+
+export default function Custom404({ statusCode }: ErrorProps) {
+  return <Error statusCode={statusCode} title="Page is not found" />;
 }
