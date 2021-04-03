@@ -1,18 +1,24 @@
 import { GetStaticProps } from 'next';
 
-import { CONFIG } from 'core/config';
-import { Photo, PhotoResponse } from 'models/photo';
+import { Photo } from 'models/photo';
 import { Layout, Grid, Banner } from 'components';
+import { api } from 'services/api';
+import { Error } from 'components/Error/Error';
 
 type MainProps = {
   mainScreenPhotos: Photo[];
   gridPhotos: Photo[];
+  error?: string;
 };
 
 const PHOTO_MARGIN = 2;
 const PHOTO_ROW_HEIGHT = 500;
 
-export default function Main({ mainScreenPhotos, gridPhotos }: MainProps) {
+export default function Main({ mainScreenPhotos, gridPhotos, error }: MainProps) {
+  if (error) {
+    return <Error title={error} />;
+  }
+
   return (
     <Layout withFooter={false}>
       <Banner photos={mainScreenPhotos} />
@@ -22,30 +28,23 @@ export default function Main({ mainScreenPhotos, gridPhotos }: MainProps) {
 }
 
 export const getStaticProps: GetStaticProps<MainProps> = async () => {
-  const mainScreenResponse: PhotoResponse[] = await fetch(`${CONFIG.baseUrl}/api/v1/photos/main-screen`)
-    .then((res) => res.json())
-    .catch((err) => err);
-  const mainScreenPhotos = mainScreenResponse.map((x) => ({
-    width: x.width,
-    height: x.height,
-    src: x.src,
-  }));
+  try {
+    const mainScreenPhotos = await api.photos.getMainScreenPhoto();
+    const gridPhotos = await api.photos.getMainScreenPhoto();
 
-  const gridResponse: PhotoResponse[] = await fetch(`${CONFIG.baseUrl}/api/v1/photos/grid`)
-    .then((res) => res.json())
-    .catch((err) => err);
-  const gridPhotos = gridResponse
-    .filter((x) => Boolean(x.is_grid))
-    .map((x) => ({
-      width: x.width,
-      height: x.height,
-      src: x.src,
-    }));
-
-  return {
-    props: {
-      mainScreenPhotos,
-      gridPhotos,
-    },
-  };
+    return {
+      props: {
+        mainScreenPhotos,
+        gridPhotos,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        mainScreenPhotos: [],
+        gridPhotos: [],
+        error: err.message,
+      },
+    };
+  }
 };

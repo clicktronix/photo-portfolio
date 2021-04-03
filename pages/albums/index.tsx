@@ -1,16 +1,22 @@
 import { GetStaticProps } from 'next';
 
 import { AlbumPreview, Layout } from 'components';
-import { CONFIG } from 'core/config';
 import { Album } from 'models/album';
 
 import styles from './AlbumsPage.module.scss';
+import { api } from 'services/api';
+import { Error } from 'components/Error/Error';
 
 type AlbumsProps = {
-  albums: Album[];
+  albums?: Album[];
+  error?: '';
 };
 
-export default function AlbumsPage({ albums }: AlbumsProps) {
+export default function AlbumsPage({ albums = [], error = '' }: AlbumsProps) {
+  if (error) {
+    return <Error title={error} />;
+  }
+
   return (
     <Layout withFooter>
       <div className={styles.AlbumsPage}>
@@ -23,14 +29,19 @@ export default function AlbumsPage({ albums }: AlbumsProps) {
 }
 
 export const getStaticProps: GetStaticProps<AlbumsProps> = async () => {
-  const albumResponse: Album[] = await fetch(`${CONFIG.baseUrl}/api/v1/albums`)
-    .then((res) => res.json())
-    .catch((err) => err.json());
-  const albums = albumResponse.map((album) => ({ ...album }));
+  try {
+    const albums = await api.albums.getAlbums();
 
-  return {
-    props: {
-      albums,
-    },
-  };
+    return {
+      props: {
+        albums,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        error: err.message,
+      },
+    };
+  }
 };
