@@ -14,7 +14,7 @@ type MainProps = {
 const PHOTO_MARGIN = 2;
 const PHOTO_ROW_HEIGHT = 500;
 
-export default function Main({ mainScreenPhotos, gridPhotos, error }: MainProps) {
+export default function MainPage({ mainScreenPhotos, gridPhotos, error }: MainProps) {
   if (error) {
     return <Error title={error} />;
   }
@@ -30,7 +30,7 @@ export default function Main({ mainScreenPhotos, gridPhotos, error }: MainProps)
 export const getStaticProps: GetStaticProps<MainProps> = async () => {
   try {
     const mainScreenPhotos = await api.photos.getMainScreenPhoto();
-    const gridPhotos = await api.photos.getMainScreenPhoto();
+    const gridPhotos = await api.photos.getGridPhoto();
 
     return {
       props: {
