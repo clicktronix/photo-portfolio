@@ -3,10 +3,21 @@
 .Contacts {
   color: $white;
   margin: auto auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .Title {
   font-size: 46px;
   color: $white;
   font-weight: 200;
+}
+
+.Cell {
+  font-size: 32px;
+  color: $white;
+  font-weight: 100;
+  margin: 7px;
 }
