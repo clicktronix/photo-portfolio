@@ -17,9 +17,11 @@ export default function ContactsPage({ contacts, error }: ContactsProps) {
     return <Error title={error} />;
   }
 
-  const whatsappLink = `https://wa.me/${contacts.whatsapp?.replace('+', '')}`;
   const emailLink = `mailto:${contacts.email}`;
+  const phone = `tel:${contacts.phone}`;
+  const whatsappLink = `https://wa.me/${contacts.whatsapp?.replace('+', '')}`;
   const instagram = `http://instagram.com/_u/${contacts.instagram}/`;
+  const telegramLink = `tg://resolve?domain=${contacts.telegram}`;
 
   return (
     <Layout withFooter>
@@ -28,13 +30,17 @@ export default function ContactsPage({ contacts, error }: ContactsProps) {
         <a href={emailLink} className={styles.Cell} target="blank">
           {contacts.email}
         </a>
-        <p className={styles.Cell}>{contacts.telegram}</p>
+        <a href={phone} className={styles.Cell} target="blank">
+          {contacts.phone}
+        </a>
         <a href={instagram} className={styles.Cell} target="blank">
           {contacts.instagram}
         </a>
-        <p className={styles.Cell}>{contacts.phone}</p>
         <a href={whatsappLink} className={styles.Cell} target="blank">
           {contacts.whatsapp}
+        </a>
+        <a href={telegramLink} className={styles.Cell} target="blank">
+          {contacts.telegram}
         </a>
       </div>
     </Layout>
