@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import Image from 'next/image';
 
 import { Photo } from 'models/photo';
+import { useIdleTimeOut } from 'helpers/hooks/useIdleTimeout';
 
 import { CloseButton } from '../CloseButton/CloseButton';
 import { PrevButton } from './PrevButton/PrevButton';
@@ -17,25 +18,22 @@ type LightBoxProps = {
   onClose?: () => void;
 };
 
+const HIDE_TIME = 1500;
 const ESCAPE_KEY = 'Escape';
 const ARROW_RIGHT_KEY = 'ArrowRight';
 const ARROW_LEFT_KEY = 'ArrowLeft';
 
-export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onClose }: LightBoxProps) => {
+export const LightBox = ({ isShow = false, currentPhoto, photos, onClose }: LightBoxProps) => {
   const [photoToShow, setPhotoToShow] = useState<Photo>(currentPhoto);
   const [isLightBoxShow, setIsLightBoxShow] = useState(isShow);
-  const [isLoading, setIsLoading] = useState(true);
   const [isShowControls, setIsShowControls] = useState(false);
-  const mouseMoveTimeOut = useRef<NodeJS.Timeout>();
+  const ref = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('mousemove', handleMouseMove);
-      mouseMoveTimeOut.current && clearTimeout(mouseMoveTimeOut.current);
     };
   });
 
@@ -43,7 +41,7 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
     hideControls();
     switch (event.key) {
       case ESCAPE_KEY:
-        hideLightBox();
+        onCloseLightBox();
         break;
       case ARROW_RIGHT_KEY:
         onNextClickHandler();
@@ -56,27 +54,23 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
     }
   };
 
-  const handleMouseMove = () => {
-    mouseMoveTimeOut.current && clearTimeout(mouseMoveTimeOut.current);
-    showControls();
-    mouseMoveTimeOut.current = setTimeout(hideControls, 1500);
-  };
-
-  const hideControls = () => {
+  const hideControls = useCallback(() => {
     setIsShowControls(false);
-  };
+  }, []);
 
-  const showControls = () => {
+  const showControls = useCallback(() => {
     setIsShowControls(true);
-  };
+  }, []);
 
-  const hideLightBox = () => {
+  const onCloseLightBox = useCallback(() => {
     setIsLightBoxShow(false);
     onClose && onClose();
-  };
+  }, []);
 
   const onPhotoLoad = () => {
-    setIsLoading(false);
+    if (ref && ref.current) {
+      ref.current.src = photoToShow.src;
+    }
   };
 
   const onNextClickHandler = () => {
@@ -89,6 +83,8 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
     currentIndex <= 0 ? setPhotoToShow(photos[0]) : setPhotoToShow(photos[currentIndex - 1]);
   };
 
+  useIdleTimeOut(HIDE_TIME, hideControls, showControls);
+
   return (
     <div
       className={cn(styles.LightBox, {
@@ -96,19 +92,18 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
       })}
     >
       <div className={styles.Wrapper}>
-        <Image
-          className={cn(styles.Photo, {
-            [styles.IsPhotoLoading]: isLoading,
-          })}
-          alt={photoToShow.src}
-          src={photoToShow.src}
-          onLoad={onPhotoLoad}
-          width={photoToShow.width}
-          height={photoToShow.height}
-        />
+        {
+          <img
+            className={cn(styles.Photo)}
+            ref={ref}
+            alt={photoToShow.src}
+            src={photoToShow.src}
+            onLoad={onPhotoLoad}
+          />
+        }
         {isShowControls && (
           <>
-            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={hideLightBox} />
+            <CloseButton tabIndex={-2} classes={styles.HideButton} onClick={onCloseLightBox} />
             <PrevButton onClick={onPrevClickHandler} />
             <NextButton onClick={onNextClickHandler} />
           </>
@@ -116,6 +111,6 @@ export const LightBox = React.memo(({ isShow = false, currentPhoto, photos, onCl
       </div>
     </div>
   );
-});
+};
 
 LightBox.displayName = 'LightBox';

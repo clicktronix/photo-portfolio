@@ -24,7 +24,7 @@ export default function ContactsPage({ contacts, error }: ContactsProps) {
   const telegramLink = `tg://resolve?domain=${contacts.telegram}`;
 
   return (
-    <Layout withFooter>
+    <Layout withFooter={false}>
       <div className={styles.Contacts}>
         <p className={styles.Title}>Кушебина Айгерим</p>
         <a href={emailLink} className={styles.Cell} target="blank">
