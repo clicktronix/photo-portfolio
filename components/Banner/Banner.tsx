@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import cn from 'classnames';
 
-import { generatorFromArr } from 'helpers/generatorFromArr';
+import { generatorFromArr } from 'shared/helpers/generatorFromArr';
 import { Photo } from 'models/photo';
 
 import styles from './Banner.module.scss';

@@ -3,7 +3,7 @@ import Gallery, { GalleryProps } from 'react-photo-gallery';
 import cn from 'classnames';
 
 import { Photo } from 'models/photo';
-import { isServerSide } from 'helpers/isServerSide';
+import { isServerSide } from 'shared/helpers/isServerSide';
 
 import { PhotoComponent, PhotoComponentProps } from '../Photo/Photo';
 import { LightBox } from '../LightBox/LightBox';

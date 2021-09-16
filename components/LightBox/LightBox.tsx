@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
-import Image from 'next/image';
 
 import { Photo } from 'models/photo';
-import { useIdleTimeOut } from 'helpers/hooks/useIdleTimeout';
+import { useIdleTimeOut } from 'shared/hooks/useIdleTimeout';
 
 import { CloseButton } from '../CloseButton/CloseButton';
 import { PrevButton } from './PrevButton/PrevButton';

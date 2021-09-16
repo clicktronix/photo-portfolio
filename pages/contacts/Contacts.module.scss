@@ -1,23 +1,49 @@
 @import 'styles/variables';
 
-.Contacts {
+.ContactsWrapper {
   color: $white;
-  margin: auto auto;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.Contacts {
+  margin-right: 30px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: column;
 }
 
 .Title {
-  font-size: 46px;
+  font-size: 55px;
   color: $white;
   font-weight: 200;
+  margin-bottom: 100px;
 }
 
 .Cell {
   font-size: 32px;
   color: $white;
   font-weight: 100;
-  margin: 7px;
+  margin: 0 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.BackgroundImg {
+  height: 100vh;
+  align-self: flex-end;
+}
+
+.ContactsIcon {
+  width: 25px;
+  height: 25px;
+  margin-top: 3px;
+  margin-left: 10px;
 }
