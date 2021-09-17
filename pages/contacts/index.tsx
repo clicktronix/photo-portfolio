@@ -1,9 +1,9 @@
 import { GetStaticProps } from 'next';
 
-import { Layout } from 'components';
+import { Layout, Error } from 'components';
 import { Contacts } from 'models/contacts';
 import { api } from 'services/api';
-import { Error } from 'components/Error/Error';
+
 import styles from './Contacts.module.scss';
 
 type ContactsProps = {
@@ -42,19 +42,19 @@ export default function ContactsPage({ contacts, error }: ContactsProps) {
           {contacts.whatsapp && (
             <a href={whatsappLink} className={styles.Cell} target="blank">
               {contacts.whatsapp}
-              <img alt="phone" src="whatsapp.svg" className={styles.ContactsIcon} />
+              <img alt="whatsapp" src="whatsapp.svg" className={styles.ContactsIcon} />
             </a>
           )}
           {contacts.telegram && (
             <a href={telegramLink} className={styles.Cell} target="blank">
               {contacts.telegram}
-              <img alt="phone" src="telegram.svg" className={styles.ContactsIcon} />
+              <img alt="telegram" src="telegram.svg" className={styles.ContactsIcon} />
             </a>
           )}
           {contacts.instagram && (
             <a href={instagram} className={styles.Cell} target="blank">
               {contacts.instagram}
-              <img alt="phone" src="instagram.svg" className={styles.ContactsIcon} />
+              <img alt="instagram" src="instagram.svg" className={styles.ContactsIcon} />
             </a>
           )}
         </div>

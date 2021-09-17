@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import cn from 'classnames';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+import { routes } from 'pages/constants';
+
 import { HamburgerMenu } from '../HamburgerButton/HamburgerButton';
+
 import styles from './Header.module.scss';
 
 export function Header() {
   const [isMenuClicked, setIsMenuClicked] = useState(false);
+  const { pathname } = useRouter();
 
   const onHamburgerClick = () => {
     setIsMenuClicked((s) => !s);
@@ -27,15 +32,21 @@ export function Header() {
         >
           <h1 className={styles.Title}>Kushebina.ph</h1>
           <nav>
-            <Link href="/">
-              <a className={styles.Link}>главная</a>
-            </Link>
-            <Link href="/albums">
-              <a className={styles.Link}>альбомы</a>
-            </Link>
-            <Link href="/contacts">
-              <a className={styles.Link}>контакты</a>
-            </Link>
+            {pathname !== routes.default && (
+              <Link href={routes.default}>
+                <a className={styles.Link}>главная</a>
+              </Link>
+            )}
+            {pathname !== routes.albums && (
+              <Link href={routes.albums}>
+                <a className={styles.Link}>альбомы</a>
+              </Link>
+            )}
+            {pathname !== routes.contacts && (
+              <Link href={routes.contacts}>
+                <a className={styles.Link}>контакты</a>
+              </Link>
+            )}
           </nav>
         </div>
       )}

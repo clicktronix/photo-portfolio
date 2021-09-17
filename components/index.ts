@@ -8,3 +8,4 @@ export * from './HamburgerButton/HamburgerButton';
 export * from './Header/Header';
 export * from './LightBox/LightBox';
 export * from './Photo/Photo';
+export * from './Error/Error';

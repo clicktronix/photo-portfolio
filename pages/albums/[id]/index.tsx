@@ -1,11 +1,10 @@
 import { GetStaticPropsContext, GetStaticProps, GetStaticPaths } from 'next';
 
 import { Album } from 'models/album';
-import { Layout, Grid, BackButton } from 'components';
+import { Layout, Grid, BackButton, Error } from 'components';
+import { api } from 'services/api';
 
 import styles from './Album.module.scss';
-import { api } from 'services/api';
-import { Error } from 'components/Error/Error';
 
 type AlbumProps = {
   album?: Album;
