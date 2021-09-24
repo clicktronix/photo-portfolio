@@ -1,9 +1,8 @@
 import { GetStaticProps } from 'next';
 
 import { Photo } from 'models/photo';
-import { Layout, Grid, Banner } from 'components';
+import { Layout, Grid, Banner, Error } from 'components';
 import { api } from 'services/api';
-import { Error } from 'components/Error/Error';
 
 type MainProps = {
   mainScreenPhotos: Photo[];
@@ -14,7 +13,7 @@ type MainProps = {
 const PHOTO_MARGIN = 2;
 const PHOTO_ROW_HEIGHT = 500;
 
-export default function Main({ mainScreenPhotos, gridPhotos, error }: MainProps) {
+export default function MainPage({ mainScreenPhotos, gridPhotos, error }: MainProps) {
   if (error) {
     return <Error title={error} />;
   }
@@ -30,7 +29,7 @@ export default function Main({ mainScreenPhotos, gridPhotos, error }: MainProps)
 export const getStaticProps: GetStaticProps<MainProps> = async () => {
   try {
     const mainScreenPhotos = await api.photos.getMainScreenPhoto();
-    const gridPhotos = await api.photos.getMainScreenPhoto();
+    const gridPhotos = await api.photos.getGridPhoto();
 
     return {
       props: {

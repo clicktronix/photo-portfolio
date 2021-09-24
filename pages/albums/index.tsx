@@ -1,16 +1,12 @@
 import { GetStaticProps } from 'next';
 
-import { AlbumPreview, Layout } from 'components';
+import { AlbumPreview, Layout, Error } from 'components';
 import { Album } from 'models/album';
+import { api } from 'services/api';
 
 import styles from './AlbumsPage.module.scss';
-import { api } from 'services/api';
-import { Error } from 'components/Error/Error';
 
-type AlbumsProps = {
-  albums?: Album[];
-  error?: '';
-};
+type AlbumsProps = { albums?: Album[]; error?: '' };
 
 export default function AlbumsPage({ albums = [], error = '' }: AlbumsProps) {
   if (error) {
@@ -18,7 +14,7 @@ export default function AlbumsPage({ albums = [], error = '' }: AlbumsProps) {
   }
 
   return (
-    <Layout withFooter>
+    <Layout withFooter={false}>
       <div className={styles.AlbumsPage}>
         {albums.map((x) => (
           <AlbumPreview {...x} key={x.name} />
