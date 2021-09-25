@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 $rem-size: 16;
 
 @function rem($pixels, $size: $rem-size) {
@@ -7,5 +9,5 @@ $rem-size: 16;
   @if (unitless($size)) {
     $size: $size * 1px;
   }
-  @return $pixels / $size * 1rem;
+  @return math.div($pixels, $size) * 1rem;
 }

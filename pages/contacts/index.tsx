@@ -5,6 +5,7 @@ import { Contacts } from 'models/contacts';
 import { api } from 'services/api';
 
 import styles from './Contacts.module.scss';
+import { handleErrorMessage } from 'shared/helpers/handleErrorMessage';
 
 type ContactsProps = {
   contacts?: Contacts;
@@ -76,7 +77,7 @@ export const getStaticProps: GetStaticProps<ContactsProps> = async () => {
   } catch (err) {
     return {
       props: {
-        error: err.message,
+        error: handleErrorMessage(err),
       },
     };
   }

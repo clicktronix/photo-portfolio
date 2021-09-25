@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import 'styles/variables';
 
 $size: 30px;
@@ -6,8 +7,8 @@ $width: 2px;
 .BackButton {
   cursor: pointer;
   display: block;
-  width: $size / 1.414;
-  height: $size / 1.414 * 2;
+  width: math.div($size, 1.414);
+  height: math.div($size, 1.414) * 2;
   position: absolute;
   background-color: $black;
   
@@ -20,7 +21,7 @@ $width: 2px;
     width: $size;
     height: $width;
     position: absolute;
-    top: calc(50% - (#{$width} / 2));
+    top: calc(50% - #{$width} / 2);
     left: 0;
     transform-origin: left 50%;
   }
@@ -51,7 +52,7 @@ $width: 2px;
     & span,
     &:before,
     &:after {
-      left: $size / 1.414 * -1;
+      left: math.div($size, 1.414) * -1;
     }
   }
 }

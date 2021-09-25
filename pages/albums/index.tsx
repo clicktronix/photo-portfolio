@@ -5,8 +5,9 @@ import { Album } from 'models/album';
 import { api } from 'services/api';
 
 import styles from './AlbumsPage.module.scss';
+import { handleErrorMessage } from 'shared/helpers/handleErrorMessage';
 
-type AlbumsProps = { albums?: Album[]; error?: '' };
+type AlbumsProps = { albums?: Album[]; error?: string };
 
 export default function AlbumsPage({ albums = [], error = '' }: AlbumsProps) {
   if (error) {
@@ -36,7 +37,7 @@ export const getStaticProps: GetStaticProps<AlbumsProps> = async () => {
   } catch (err) {
     return {
       props: {
-        error: err.message,
+        error: handleErrorMessage(err),
       },
     };
   }
