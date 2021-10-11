@@ -1,0 +1,23 @@
+.Spinner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+
+.Cube1, .Cube2 {
+  background-color: #fff;
+  width: 15px;
+  height: 15px;
+  animation: sk-cubemove 1.8s infinite ease-in-out;
+}
+
+.Cube2 {
+  animation-delay: -0.9s;
+}
+
+@keyframes sk-cubemove {
+  25% { transform: translateX(42px) rotate(-90deg) scale(0.5) }
+  50% { transform: translateX(42px) translateY(42px) rotate(-180deg) }
+  75% { transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
+  100% { transform: rotate(-360deg) }
+}

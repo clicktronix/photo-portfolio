@@ -5,11 +5,13 @@ import Image from 'next/image';
 import { Album } from 'models/album';
 
 import styles from './AlbumPreview.module.scss';
+import { Spinner } from 'components/Spinner/Spinner';
 
 type AlbumProps = Album;
 
 export function AlbumPreview({ id, name, description, preview }: AlbumProps) {
   const [isAlbumHovered, setIsAlbumHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const onMouseEnterHandler = () => {
     setIsAlbumHovered(true);
@@ -19,6 +21,8 @@ export function AlbumPreview({ id, name, description, preview }: AlbumProps) {
     setIsAlbumHovered(false);
   };
 
+  const setIsLoaded = () => setIsLoading(false);
+
   return (
     <Link href={`/albums/${id}`}>
       <div
@@ -27,6 +31,7 @@ export function AlbumPreview({ id, name, description, preview }: AlbumProps) {
         onMouseLeave={onMouseLeaveHandler}
         role="article"
       >
+        {isLoading && <Spinner />}
         {preview && (
           <Image
             className={styles.PreviewPhoto}
@@ -35,6 +40,7 @@ export function AlbumPreview({ id, name, description, preview }: AlbumProps) {
             src={preview.src}
             alt="album-preview"
             key={preview.src}
+            onLoadingComplete={setIsLoaded}
           />
         )}
         {isAlbumHovered && <h1 className={styles.Name}>{name}</h1>}

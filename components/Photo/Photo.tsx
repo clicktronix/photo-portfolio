@@ -3,6 +3,8 @@ import { RenderImageProps } from 'react-photo-gallery';
 
 import { Photo } from 'models/photo';
 
+import styles from './Photo.module.scss';
+
 export type PhotoComponentProps = {
   onLoad: () => void;
 } & RenderImageProps<Photo>;
@@ -20,6 +22,7 @@ export const PhotoComponent = React.memo(({ photo, index, margin, onClick, onLoa
       width={photo.width}
       height={photo.height}
       key={photo.key}
+      className={styles.Photo}
       onClick={onImageClick}
       onLoad={onLoad}
     />

@@ -5,7 +5,7 @@ $color: #ecf0f1;
 
 $height-icon: 20px;
 $width-line: 40px;
-$height-line: 4px;
+$height-line: 2px;
 
 $transition-time: 0.5s;
 $rotation: 45deg;
@@ -28,7 +28,6 @@ $translateX: 0;
     height: $height-line;
     position: absolute;
     left: 0;
-    border-radius: math.div($height-line, 2);
     transition: all $transition-time;
 
     &.FirstLine {

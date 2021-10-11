@@ -2,12 +2,13 @@
 
 .Album {
   position: relative;
-  max-width: 440px;
+  width: 440px;
   height: 600px;
   background-color: $dark-grey;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   transition: transform .5s, filter .5s ease-in-out;
   transform-origin: center center;
