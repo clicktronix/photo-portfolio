@@ -2,13 +2,14 @@
 
 .Header {
   position: absolute;
+  display: flex;
+  justify-content: center;
   z-index: 100;
   width: 100%;
   height: 80px;
 }
 
 .Menu {
-  position: absolute;
   right: 140px;
   top: 25px;
   font-size: 18px;
@@ -17,7 +18,12 @@
   justify-content: space-between;
   align-items: center;
   width: 80%;
-  animation: slide-out .5s forwards;
+}
+
+.HamburgerButton {
+  & div {
+    margin: 28px auto;
+  }
 }
 
 .Title {
@@ -33,11 +39,11 @@
 }
 
 .ShowMenu {
-  animation: slide-in .4s forwards;
+  animation: slide-in .6s forwards;
 }
 
 .IsHeaderShow {
-  animation: blur-in 0.5s forwards;
+  animation: blur-in 0.7s forwards;
   backdrop-filter: blur(8px);
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 }
@@ -59,15 +65,6 @@
   }
   100% {
     transform: translateX(0);
-  }
-}
-
-@keyframes slide-out {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-200%);
   }
 }
 

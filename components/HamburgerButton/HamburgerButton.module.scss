@@ -7,7 +7,7 @@ $height-icon: 20px;
 $width-line: 40px;
 $height-line: 4px;
 
-$transition-time: 0.4s;
+$transition-time: 0.5s;
 $rotation: 45deg;
 $translateY: math.div($height-icon, 2);
 $translateX: 0;
@@ -17,7 +17,6 @@ $translateX: 0;
   height: $height-icon;
   position: absolute;
   display: block;
-  margin: $height-icon * 1.7 auto $height-icon auto;
   top: 0px;
   right: 40px;
   cursor: pointer;

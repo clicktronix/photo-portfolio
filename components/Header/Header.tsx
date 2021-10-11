@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { routes } from 'pages/constants';
 
-import { HamburgerMenu } from '../HamburgerButton/HamburgerButton';
+import { HamburgerButton } from '../HamburgerButton/HamburgerButton';
 
 import styles from './Header.module.scss';
 
@@ -23,7 +23,9 @@ export function Header() {
         [styles.IsHeaderShow]: isMenuClicked,
       })}
     >
-      <HamburgerMenu isClicked={isMenuClicked} onClick={onHamburgerClick} />
+      <div className={styles.HamburgerButton}>
+        <HamburgerButton isClicked={isMenuClicked} onClick={onHamburgerClick} />
+      </div>
       {isMenuClicked && (
         <div
           className={cn(styles.Menu, {

@@ -12,12 +12,13 @@
   transition: transform .5s, filter .5s ease-in-out;
   transform-origin: center center;
   margin: 10px;
+  padding: 8px;
 
   &:hover {
     transform: scale(1.02);
   }
 
-  &:hover > img {
+  &:hover > div {
     transition: transform .5s, filter .5s ease-in-out;
     filter: brightness(35%);
   }
@@ -25,7 +26,6 @@
 
 .PreviewPhoto {
   width: 100%;
-  padding: 8px;
   object-fit: cover;
 }
 
@@ -36,7 +36,8 @@
   right: 50px;
   color: white;
   font-weight: 100;
-  animation: fadeIn 1.2s
+  animation: fadeIn 1.2s;
+  z-index: 100;
 }
 
 .Description {
@@ -46,7 +47,8 @@
   right: 50px;
   color: white;
   font-weight: 200;
-  animation: fadeIn 1.2s
+  animation: fadeIn 1.2s;
+  z-index: 100;
 }
 
 @keyframes fadeIn {

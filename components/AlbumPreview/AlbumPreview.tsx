@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { Album } from 'models/album';
 
@@ -26,7 +27,16 @@ export function AlbumPreview({ id, name, description, preview }: AlbumProps) {
         onMouseLeave={onMouseLeaveHandler}
         role="article"
       >
-        {preview && <img className={styles.PreviewPhoto} src={preview.src} alt="album-preview" key={preview.src} />}
+        {preview && (
+          <Image
+            className={styles.PreviewPhoto}
+            width={preview.width}
+            height={preview.height}
+            src={preview.src}
+            alt="album-preview"
+            key={preview.src}
+          />
+        )}
         {isAlbumHovered && <h1 className={styles.Name}>{name}</h1>}
         {isAlbumHovered && <p className={styles.Description}>{description}</p>}
       </div>

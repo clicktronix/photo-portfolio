@@ -1,14 +1,14 @@
 import cn from 'classnames';
 import React from 'react';
 
-import styles from './Hamburger.module.scss';
+import styles from './HamburgerButton.module.scss';
 
-type HamburgerMenuProps = {
+type HamburgerButtonProps = {
   isClicked: boolean;
   onClick: () => void;
 };
 
-export function HamburgerMenu({ isClicked, onClick }: HamburgerMenuProps) {
+export function HamburgerButton({ isClicked, onClick }: HamburgerButtonProps) {
   return (
     <div
       className={cn(styles.HamburgerIcon, {
