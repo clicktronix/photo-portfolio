@@ -5,6 +5,7 @@ import { Layout, Grid, BackButton, Error } from 'components';
 import { api } from 'services/api';
 
 import styles from './Album.module.scss';
+import { handleErrorMessage } from 'shared/helpers/handleErrorMessage';
 
 type AlbumProps = {
   album?: Album;
@@ -63,7 +64,7 @@ export const getStaticProps: GetStaticProps<AlbumProps> = async ({ params }: Get
   } catch (err) {
     return {
       props: {
-        error: err.message,
+        error: handleErrorMessage(err),
       },
     };
   }

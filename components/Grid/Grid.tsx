@@ -25,13 +25,13 @@ export const Grid = React.memo(({ photos, margin, targetRowHeight }: GridProps) 
     setSelectedPhoto(photo);
   };
 
-  const onPhotoLoaded = () => {
+  const onPhotoLoaded = useCallback(() => {
     counter.current += 1;
     if (counter.current >= photos.length) {
       setIsLoading(false);
       counter.current = 0;
     }
-  };
+  }, [photos.length]);
 
   const onLightBoxClose = () => {
     setSelectedPhoto(null);
@@ -39,7 +39,7 @@ export const Grid = React.memo(({ photos, margin, targetRowHeight }: GridProps) 
 
   const renderPhoto = useCallback(
     ({ ...props }: Omit<PhotoComponentProps, 'onLoad'>) => <PhotoComponent {...props} onLoad={onPhotoLoaded} />,
-    [],
+    [onPhotoLoaded],
   );
 
   if (isServerSide()) {

@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { routes } from 'pages/constants';
+import { routes } from 'shared/constants';
 
 import { HamburgerButton } from '../HamburgerButton/HamburgerButton';
 

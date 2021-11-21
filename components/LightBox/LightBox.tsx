@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
-
 import { Photo } from 'models/photo';
 import { useIdleTimeOut } from 'shared/hooks/useIdleTimeout';
 
@@ -64,7 +63,7 @@ export const LightBox = ({ isShow = false, currentPhoto, photos, onClose }: Ligh
   const onCloseLightBox = useCallback(() => {
     setIsLightBoxShow(false);
     onClose && onClose();
-  }, []);
+  }, [onClose]);
 
   const onPhotoLoad = () => {
     if (ref && ref.current) {

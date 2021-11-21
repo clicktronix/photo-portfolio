@@ -23,8 +23,9 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'next',
     'plugin:jsx-a11y/recommended',
-    'prettier/@typescript-eslint',
     'plugin:prettier/recommended', // Make sure this is always the last element in the array.
   ],
   rules: {
@@ -44,5 +45,6 @@ module.exports = {
     ],
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
+    '@next/next/no-img-element': 'off',
   },
 };

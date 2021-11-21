@@ -4,7 +4,7 @@ import { Photo } from 'models/photo';
 import { Layout, Grid, Banner, Error } from 'components';
 import { api } from 'services/api';
 import { handleErrorMessage } from 'shared/helpers/handleErrorMessage';
-import { PHOTO_MARGIN, PHOTO_ROW_HEIGHT } from './constants';
+import { PHOTO_MARGIN, PHOTO_ROW_HEIGHT } from '../shared/constants';
 
 type MainProps = {
   mainScreenPhotos: Photo[];

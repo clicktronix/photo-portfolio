@@ -24,7 +24,7 @@ export function AlbumPreview({ id, name, description, preview }: AlbumProps) {
   const setIsLoaded = () => setIsLoading(false);
 
   return (
-    <Link href={`/albums/${id}`}>
+    <Link href={`/albums/${id}`} passHref>
       <div
         className={styles.Album}
         onMouseEnter={onMouseEnterHandler}
